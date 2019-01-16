@@ -1,0 +1,56 @@
+import java.sql.*;
+
+
+
+public class Program 
+{
+
+	public static void main(String[] args) 
+	{
+		try {
+			Connection connection = null;
+			try 
+			{
+				Class.forName("org.postgresql.Driver");
+			} 
+			catch (ClassNotFoundException e) 
+			{
+				System.out.println("Could not find JDBC Driver");
+				e.printStackTrace();
+				return;
+			} 
+
+			try 
+			{
+				Class.forName("org.postgresql.Driver");
+				connection =DriverManager.getConnection("jdbc:postgresql://localhost:5432/FinalProject","postgres","root");
+			}
+			catch (Exception e) 
+			{
+				System.out.println("Could not load class"
+						+"org.postgresql.Driver");
+				e.printStackTrace();
+			}
+			if (connection != null) {
+				try {
+					Statement statement = connection.createStatement();
+					ResultSet result =
+							statement.executeQuery("SELECT * FROM GAMESTATISTICS");
+					while(result.next()){
+						System.out.println("Game Statistics:");
+						System.out.println(" Number of Games: "+result.getInt("numberofgames")+"\n Number of Human Wins: "+result.getInt("numberhumanwins")+
+								"\n Number of AI Wins: "+result.getInt("numberaiwins")+"\n Average number of Draws: "+result.getInt("averagenumberdraws")
+								+"\n Longest Game: "+result.getInt("longestgame"));
+						System.out.println();
+					}
+				}
+				catch (SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		catch(Exception e) {System.out.println(e);}
+	}
+}
+
