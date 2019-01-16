@@ -1,0 +1,21 @@
+package commandline;
+
+public class IndividualCards {
+
+	private String Name;
+	private int Atb1;
+	private int Atb2;
+	private int Atb3;
+	private int Atb4;
+	private int Atb5;
+
+	public IndividualCards(String Name, int Atb1, int Atb2, int Atb3, int Atb4, int Atb5) {
+		this.Name = Name;
+		this.Atb1 = Atb1;
+		this.Atb2 = Atb2;
+		this.Atb3 = Atb3;
+		this.Atb4 = Atb4;
+		this.Atb5 = Atb5;
+
+	}
+}
