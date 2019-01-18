@@ -1,49 +1,67 @@
-package commandline;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.smartcardio.Card;
-
 public class CardDeck {
-	IndividualCards individualCards;
-	List<List<Card>> StartDeck = new ArrayList<>();
-	List<List<Card>> ShuffleDeck = new ArrayList<>();
-	List<Card> cards = new ArrayList<Card>();
+	String[] lineStrArr = new String[5];
+	List StartDeck = new ArrayList<>(17);
+	List<List> ShuffleDeck = new ArrayList<>();
+	List<String> LineStrArr = new ArrayList<>();
+	IndividualCardTest cards;
+	List Deck;
 
 	public void setUpDeck() throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader("StarCitizenDeck.txt"));
-		// data structure for inserting the values
 		String line;
 
+		BufferedReader br = new BufferedReader(new FileReader("StarCitizenDeck.txt"));
+		// data structure for inserting the values
 		while ((line = br.readLine()) != null) {
 			// split the line you read after the
+			System.out.println(line);
 			StartDeck.add(separateDeck(line));
 
 		}
+
 		br.close();
-		System.out.println(StartDeck.get(0));
 	}
 
-	public List<Card> separateDeck(String line) {
-		for (int i = 0; i < 51; i++) {
-			if (line == null) {
-				return cards;
-			} else {
-				String[] lineStrArr = line.split("\\s+");
-				if (lineStrArr.length == 5) {
-					for (int j = 0; j < 6; j++) {
-						cards.add(new IndividualCards(lineStrArr[0], Integer.parseInt(lineStrArr[1]),
-								Integer.parseInt(lineStrArr[2]), Integer.parseInt(lineStrArr[3]),
-								Integer.parseInt(lineStrArr[4]), Integer.parseInt(lineStrArr[5])));
-					}
+	public List<IndividualCardTest> separateDeck(String line) {
+		try {
+			lineStrArr = line.split("\\s+");
+			Deck = new ArrayList<>();
+			System.out.println(lineStrArr[1]);
 
-				}
-			}
+			// for (int i = 0; i < lineStrArr.length; i++) {
+			// cards = new IndividualCardTest((lineStrArr[0]),
+			// Integer.parseInt(lineStrArr[1]),
+			// Integer.parseInt(lineStrArr[2]), Integer.parseInt(lineStrArr[3]),
+			// Integer.parseInt(lineStrArr[4]), Integer.parseInt(lineStrArr[5]));
+			// System.out.println(cards);
+			// }
+			Deck.add(lineStrArr[0]);
+			Deck.add(Integer.parseInt(lineStrArr[1]));
+			Deck.add(Integer.parseInt(lineStrArr[2]));
+			Deck.add(Integer.parseInt(lineStrArr[3]));
+			Deck.add(Integer.parseInt(lineStrArr[4]));
+			Deck.add(Integer.parseInt(lineStrArr[5]));
+
+		} catch (Exception e) {
+
 		}
-		return cards;
+		return Deck;
+
+	}
+
+	public List getStartDeck() {
+
+		try {
+			setUpDeck();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return StartDeck;
 	}
 }
