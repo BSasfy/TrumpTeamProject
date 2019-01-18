@@ -1,0 +1,45 @@
+package commandline;
+
+import java.util.ArrayList;
+import java.util.Random;
+import javax.smartcardio.Card;
+
+public class Dealing {
+	// This code programs how to deal the cards (an ArrayList) to the players
+	// It uses the Player/ AI objects to allocate the cards
+	
+	// In which class should these methods be stored?? 
+	ArrayList<Card> cards = new ArrayList<Card>();
+	
+	
+	public void createPlayerDecks(Object player, Object AI1, Object AI2, Object AI3) {
+		// Each player needs their own stack of cards --> Use an ArrayList for that 
+		// The object inside the ArrayList is a Card 
+		
+		// The player/ AI objects are [type of Object] 
+		
+		ArrayList<Card> playerDeck = new ArrayList<Card>();
+		ArrayList<Card> AIDeck1 = new ArrayList<Card>();
+		ArrayList<Card> AIDeck2 = new ArrayList<Card>();
+		ArrayList<Card> AIDeck3 = new ArrayList<Card>();
+	}
+	
+	public void dealing(ArrayList<Card> cards, ArrayList<Card> playerDeck, ArrayList<Card> AIDeck1, ArrayList<Card> AIDeck2, ArrayList<Card> AIDeck3) {
+		Random random = new Random();
+		for(int i = 0; i<cards.size(); i++) { // As long as there are cards in the deck 
+			int randomIndex = random.nextInt(cards.size()); // Choose a random card from the cards ArrayList;
+			Card randomCard = cards.get(randomIndex); // This is the chosen random card
+			cards.remove(randomIndex); // The chosen random card is then removed so it cannot be dealt several times
+			if((i==0) || ((i+1)%4==0)) { // choose which player deck this card is dealt to 
+				playerDeck.add(randomCard);			
+			} else if(( i==1) || (i%4 == 0)) {
+				AIDeck1.add(randomCard);
+			} else if(( i==2) || ((i-1)%4 == 0)) {
+				AIDeck2.add(randomCard);
+			} else {
+				AIDeck3.add(randomCard);
+			}
+		}
+	}
+	
+}
