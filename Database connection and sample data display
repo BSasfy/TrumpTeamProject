@@ -31,9 +31,16 @@ public class Program
 						+"org.postgresql.Driver");
 				e.printStackTrace();
 			}
-			if (connection != null) {
+			if (connection != null)
+			{
 				try {
 					Statement statement = connection.createStatement();
+					String insert="INSERT INTO GAMESTATISTICS values(5,2,1,5.0,7)";
+					statement.executeUpdate(insert);
+					System.out.println("Statement successfully inserted");
+					
+					
+//										
 					ResultSet result =
 							statement.executeQuery("SELECT * FROM GAMESTATISTICS");
 					while(result.next()){
@@ -43,14 +50,19 @@ public class Program
 								+"\n Longest Game: "+result.getInt("longestgame"));
 						System.out.println();
 					}
+					
 				}
 				catch (SQLException e)
 				{
 					e.printStackTrace();
 				}
+				
 			}
 		}
-		catch(Exception e) {System.out.println(e);}
+		catch(Exception e) 
+		{
+			System.out.println(e);
+		}
 	}
 }
 
