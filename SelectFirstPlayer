@@ -1,0 +1,16 @@
+// This method select the firstPlayer of the game --> this is only done once at the beginning of each game 
+
+	public Object selectFirstPlayer(Object player, Object AI1, Object AI2, Object AI3) {	
+		int randomNum = ThreadLocalRandom.current().nextInt(0, 4); // 0 = minimum, 4 = max + 1, max = 3 because there are four players
+		firstPlayer = new Object();
+		if(randomNum == 0) { 
+			firstPlayer = player; // Human player begins
+		} else if (randomNum == 1) {
+			firstPlayer = AI1; // AI1 begins
+		} else if(randomNum == 2) {
+			firstPlayer = AI2; // AI2 begins
+		} else {
+			firstPlayer = AI3; // AI3 begins
+		}
+		return(firstPlayer);
+	}
