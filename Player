@@ -1,0 +1,52 @@
+public class Player {
+
+	protected ArrayList<List<Double>> deck = new ArrayList<List<Double>>();
+	protected ArrayList<List<Integer>> attribute = new ArrayList<List<Integer>>();
+	private String name;
+	
+	// Player object 
+	public Player (String name, ArrayList<List<Double>> deck) {
+		this.name = name;
+		this.deck = deck;
+	}
+
+	public String getN() {
+		return name;
+		
+	}
+	public ArrayList<List<Double>>getCards(ArrayList <List<Double>> deck){
+		return deck;
+	}
+	
+	public Object getCard() {
+		Object b = deck.get(0); // as always top card
+		return b;
+	}
+	
+	// make turn ?
+	public void takeTurn() {
+		
+	}
+	//finish turn?
+	public void finishTurn(){
+		
+	}
+	
+	// get category
+	public double getAttribute(int i) {
+		double b = attribute.get(i).get(i);
+		return b;
+	}
+	// get active status
+	public void getActive() {
+		getActive();
+	}
+	public void notActive() {
+		
+	}
+	
+
+}
+	
+
+
