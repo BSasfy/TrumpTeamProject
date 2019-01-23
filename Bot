@@ -1,0 +1,33 @@
+public class Bot extends Player{
+	private String name;
+	private ArrayList<List<Double>> deck = new ArrayList<List<Double>>();
+	private Random r;
+	
+	//constructor
+	public Bot(String name, ArrayList<List<Double>> deck) {
+		super(name,deck);
+		name = "AI"+ r.nextInt();
+		
+	}
+	//I am not really sure about Active thing
+	public void howToplay() {
+		if(getActive()) {
+			playGood();
+			
+		}else {
+			nonActive();
+		}
+	}
+	// choose max category
+	public double playGood() {
+		deck.get(0);
+		double max=0;
+		for(int i = 0; i<attribute.size();i++) {
+			double a = getAttribute(i);
+			if (a>getAttribute(i) ) {
+				max = a;
+				
+			}
+		}
+		return max;
+	}
