@@ -1,0 +1,26 @@
+import java.awt.List;
+import java.util.ArrayList;
+
+public class CommonCard {
+
+	private List common = new ArrayList<>();
+
+	public void getCommon() {
+
+		common.add(palyerOneDeck.get(0));
+		common.add(playerTwoDeck.get(0));
+		playerOneDeck.remove(0);
+		playerTwoDeck.remove(0);
+
+	}
+
+	public void removeCards() {
+		playerOneDeck.remove(0);
+		playerTwoDeck.remove(0);
+	}
+
+	public void addCards() {
+		// depending on who is the winner assuming the first palyer is
+		playerOneDeck.addAll(common);
+	}
+}
