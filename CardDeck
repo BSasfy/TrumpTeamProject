@@ -2,12 +2,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class CardDeck {
+public class TestDeck {
 	String[] lineStrArr = new String[5];
-	List StartDeck = new ArrayList<>(17);
-	List<List> ShuffleDeck = new ArrayList<>();
+	List<List> StartDeck = new ArrayList<>(17);
+	List ShuffleDeck = new ArrayList<>();
 	List<String> LineStrArr = new ArrayList<>();
 	IndividualCardTest cards;
 	List Deck;
@@ -21,6 +22,7 @@ public class CardDeck {
 			// split the line you read after the
 			System.out.println(line);
 			StartDeck.add(separateDeck(line));
+			br.read();
 
 		}
 
@@ -29,17 +31,9 @@ public class CardDeck {
 
 	public List<IndividualCardTest> separateDeck(String line) {
 		try {
-			lineStrArr = line.split("\\s+");
+			lineStrArr = line.split("\\s");
 			Deck = new ArrayList<>();
-			System.out.println(lineStrArr[1]);
 
-			// for (int i = 0; i < lineStrArr.length; i++) {
-			// cards = new IndividualCardTest((lineStrArr[0]),
-			// Integer.parseInt(lineStrArr[1]),
-			// Integer.parseInt(lineStrArr[2]), Integer.parseInt(lineStrArr[3]),
-			// Integer.parseInt(lineStrArr[4]), Integer.parseInt(lineStrArr[5]));
-			// System.out.println(cards);
-			// }
 			Deck.add(lineStrArr[0]);
 			Deck.add(Integer.parseInt(lineStrArr[1]));
 			Deck.add(Integer.parseInt(lineStrArr[2]));
@@ -54,10 +48,17 @@ public class CardDeck {
 
 	}
 
+	public void shuffleCard() {
+
+		Collections.shuffle(StartDeck);
+
+	}
+
 	public List getStartDeck() {
 
 		try {
 			setUpDeck();
+			// shuffleCard();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
