@@ -1,7 +1,8 @@
 public class Player {
-		protected ArrayList<Card> playerDeck = new ArrayList<List<Double>>();
+	protected ArrayList<Card> playerDeck = new ArrayList<List<Double>>();
 	protected ArrayList<Attributes> attribute = new ArrayList<List<Integer>>();
-	private String name;
+	protected String name;
+	protected int count;
 	
 	// Player object 
 	public Player (String name, ArrayList<Card> playerDeck) {
@@ -50,9 +51,6 @@ public class Player {
 	}
 	// some code for database?
 	public int isWinner() {
-		int count= 0 ;
-		int a = 0;
-		count = a +1;
 		count++;
 		return count;
 	}
