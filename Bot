@@ -1,19 +1,37 @@
-public class Bot extends Player{
 	private String name;
-	private ArrayList<List<Double>> deck = new ArrayList<List<Double>>();
+	
+	// got names from "Dealing"
+	private ArrayList<Card> AIDeck1 = new ArrayList<Card>();
+	private ArrayList<Card> AIDeck2 = new ArrayList<Card>();
+	private ArrayList<Card> AIDeck3 = new ArrayList<Card>();
 	private Random r;
 	
 	//constructor
-	public Bot(String name, ArrayList<List<Double>> deck) {
-		super(name,deck);
+	public Bot(String name, ArrayList<Card> AIDeck) {
+		super(name,AIDeck);
 		name = "AI"+ r.nextInt();
 		
 	}
+	// add bot to the game, allocate shuffled AIDecks
+	public void addBot(int j) {
+		for(int i=1; i<3;i=j) {
+			if(j==1) {
+		Bot bot = new Bot(name, AIDeck1);
+			}else if(j==2){
+				Bot bot = new Bot(name, AIDeck1);
+				Bot bot1 = new Bot(name, AIDeck2);	
+			}else {
+				Bot bot = new Bot(name, AIDeck1);
+				Bot bot1 = new Bot(name, AIDeck2);
+				Bot bot2 = new Bot(name,AIDeck3);
+			}
+		}
+	}
+	
 	//I am not really sure about Active thing
 	public void howToplay() {
 		if(getActive()) {
-			playGood();
-			
+			playGood();	
 		}else {
 			nonActive();
 		}
