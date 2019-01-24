@@ -14,15 +14,15 @@ public class Player {
 		return name;
 		
 	}
-	public ArrayList<Card> getCards(){
+	public ArrayList<Card> getDeck(){
 		return playerDeck;
 	}
 	
-	public Object getCard() {
+	public Object getTopCard() {
 		Object b = playerDeck.get(0); // as always top card
 		return b;
 	}
-	public ArrayList<List<Integer>> getAttributeList() {
+	public ArrayListAttribute> seeAttributes() {
 		return attribute;
 	}
 	// make turn ?
@@ -34,7 +34,7 @@ public class Player {
 		
 	}
 	
-	// get category
+	// get category, this is used in Bot for max value
 	public double getAttribute(int i) {
 		double b = attribute.get(i).get(i);
 			}
