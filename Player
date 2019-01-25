@@ -1,60 +1,38 @@
-public class Player {
-	protected ArrayList<Card> playerDeck = new ArrayList<List<Double>>();
-	protected ArrayList<Attributes> attribute = new ArrayList<List<Integer>>();
-	protected String name;
-	protected int count;
-	
-	// Player object 
-	public Player (String name, ArrayList<Card> playerDeck) {
-		this.name = name;
-		this.playerDeck = playerDeck;
-	}
+package commandline;
 
-	public String getName() {
-		return name;
-		
-	}
-	public ArrayList<Card> getDeck(){
-		return playerDeck;
+import java.util.List;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Player {
+	
+	List<List> deck;
+	int chosenAttribute;
+	
+	void removeCard () {
+		deck.remove(0);
 	}
 	
-	public Object getTopCard() {
-		Object b = playerDeck.get(0); // as always top card
-		return b;
-	}
-	public ArrayListAttribute> seeAttributes() {
-		return attribute;
-	}
-	// make turn ?
-	public void takeTurn() {
-		
-	}
-	//finish turn?
-	public void finishTurn(){
+	void addCard() {
 		
 	}
 	
-	// get category, this is used in Bot for max value
-	public double getAttribute(int i) {
-		double b = attribute.get(i).get(i);
-			}
-		return b;
+	int chooseAttribute() {
+		
+		Scanner s = new Scanner(System.in);
+		System.out.println("Please enter your chosen attribute 1-5");
+		chosenAttribute=s.nextInt();
+		return chosenAttribute;
+		//HELP
 	}
 	
-	// get player status
-	public Status getActive() {
-		getActive();
-		return Status;
-	}
-	public Status notActive() {
-		return Status;
-	}
-	// some code for database?
-	public int isWinner() {
-		count++;
-		return count;
+
+	public List<List> getDeck(){
+		return deck;
 	}
 	
+	public void setDeck(List<List> deck) {
+		this.deck = deck;
+	}
 
 }
-	
