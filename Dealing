@@ -10,11 +10,7 @@ public class Dealing {
 	DeckInAndShuffle dias = new DeckInAndShuffle();
 	ArrayList<List> shuffledDeck = new ArrayList<>();
 
-	//public void createPlayerDecks(Object player, Object AI1, Object AI2, Object AI3) {
-		// Each player needs their own stack of cards --> Use an ArrayList for that
-		// The object inside the ArrayList is a Card
-
-		// The player/ AI objects are [type of Object]
+	
 
 		List<List> playerDeck = new ArrayList<List>(); //Why was it <Card>? //Changed from ArrayList to List to be able to use subLists
 		List<List> AIDeck1 = new ArrayList<List>();
@@ -40,25 +36,7 @@ public class Dealing {
 		gp.setAI3Deck(AIDeck3);
 	}
 
-	/*ublic void dealing(ArrayList<Card> cards, ArrayList<Card> playerDeck, ArrayList<Card> AIDeck1,
-			ArrayList<Card> AIDeck2, ArrayList<Card> AIDeck3) {
-		Random random = new Random();
-		for (int i = 0; i < cards.size(); i++) { // As long as there are cards in the deck
-			int randomIndex = random.nextInt(cards.size()); // Choose a random card from the cards ArrayList;
-			Card randomCard = cards.get(randomIndex); // This is the chosen random card
-			cards.remove(randomIndex); // The chosen random card is then removed so it cannot be dealt several times
-			if ((i == 0) || ((i + 1) % 4 == 0)) { // choose which player deck this card is dealt to
-				playerDeck.add(randomCard);
-			} else if ((i == 1) || (i % 4 == 0)) {
-				AIDeck1.add(randomCard);
-			} else if ((i == 2) || ((i - 1) % 4 == 0)) {
-				AIDeck2.add(randomCard);
-			} else {
-				AIDeck3.add(randomCard);
-			}
-		}
-	}
-	*/
+	
 	public void setShuffledDeck(ArrayList<List> startDeck) {
 		this.shuffledDeck = startDeck;
 	}
