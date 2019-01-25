@@ -1,3 +1,5 @@
+package commandline;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -5,64 +7,71 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TestDeck {
+public class DeckInAndShuffle {
+
 	String[] lineStrArr = new String[5];
-	List<List> StartDeck = new ArrayList<>(17);
-	List ShuffleDeck = new ArrayList<>();
+	ArrayList<List> startDeck = new ArrayList<>(); //17? //changed it from List<List> to ArrayList<List> so it works with Dealing. 
+	//List shuffledDeck = new ArrayList<>();
 	List<String> LineStrArr = new ArrayList<>();
-	IndividualCardTest cards;
-	List Deck;
+	IndividualCards cards; //Why is it  here?
+	List card;
+	String[] fieldNames;
 
 	public void setUpDeck() throws IOException {
 		String line;
 
 		BufferedReader br = new BufferedReader(new FileReader("StarCitizenDeck.txt"));
+		fieldNames = br.readLine().split("\\s");
 		// data structure for inserting the values
-		while ((line = br.readLine()) != null) {
+		while ((line=br.readLine()) != null) {
+			
+			//can we just insert separateDeck() here?
 			// split the line you read after the
-			System.out.println(line);
-			StartDeck.add(separateDeck(line));
-			br.read();
+			startDeck.add(separateDeck(line));
+			//br.read();
 
 		}
 
 		br.close();
+		shuffleDeck();
+		System.out.println(startDeck);
 	}
 
-	public List<IndividualCardTest> separateDeck(String line) {
+	public List<IndividualCards> separateDeck(String line) {
 		try {
 			lineStrArr = line.split("\\s");
-			Deck = new ArrayList<>();
+			card = new ArrayList<>();
 
-			Deck.add(lineStrArr[0]);
-			Deck.add(Integer.parseInt(lineStrArr[1]));
-			Deck.add(Integer.parseInt(lineStrArr[2]));
-			Deck.add(Integer.parseInt(lineStrArr[3]));
-			Deck.add(Integer.parseInt(lineStrArr[4]));
-			Deck.add(Integer.parseInt(lineStrArr[5]));
+			card.add(lineStrArr[0]);
+			card.add(Integer.parseInt(lineStrArr[1]));
+			card.add(Integer.parseInt(lineStrArr[2]));
+			card.add(Integer.parseInt(lineStrArr[3]));
+			card.add(Integer.parseInt(lineStrArr[4]));
+			card.add(Integer.parseInt(lineStrArr[5]));
 
 		} catch (Exception e) {
 
 		}
-		return Deck;
+		return card;
 
 	}
 
-	public void shuffleCard() {
+	public void shuffleDeck() {
 
-		Collections.shuffle(StartDeck);
+		Collections.shuffle(startDeck);
 
 	}
 
-	public List getStartDeck() {
+	public ArrayList getStartDeck() {
 
-		try {
+		/*try {
 			setUpDeck();
 			// shuffleCard();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return StartDeck;
+		}*/
+		return startDeck;
 	}
+
 }
