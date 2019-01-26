@@ -1,4 +1,6 @@
-package commandline;
+//THIS IS NOW INTEGRATED WITH GAMEPLAY. DO NOT USE!
+
+/*package commandline;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -56,4 +58,4 @@ public class Dealing {
 	public List<List> getAIDeck3 () {
 		return AIDeck3;
 	}
-}
+}*/
