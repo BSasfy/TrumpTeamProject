@@ -1,5 +1,6 @@
 package commandline;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,93 +8,105 @@ import java.util.List;
 import java.util.Random;
 
 public class GamePlay {
-	
-	//records need to be a string //
-	List<List> playerDeck = new ArrayList<List>(); //Why was it <Card>? //Changed from ArrayList to List to be able to use subLists
-	List<List> AIDeck1 = new ArrayList<List>();
+
+	// records need to be a string //
+	List<List> playerDeck = new ArrayList<List>(); // Why was it <Card>? //Changed from ArrayList to List to be able to
+													// use subLists
+	List<List> AIDeck1;
 	List<List> AIDeck2 = new ArrayList<List>();
 	List<List> AIDeck3 = new ArrayList<List>();
-	
-	
-	Player Human = new Player();
-	Player AI1 = new Player();
-	Player AI2 = new Player();
-	Player AI3 = new Player();
-	
-	
-	
-	void playgame() {
-		
-		Human.deck = playerDeck;
-		AI1.deck = AIDeck1;
-		AI2.deck = AIDeck2; 
-		AI3.deck = AIDeck3;
-		
-		
-		
-		
-		List<List> cardsInGame = new ArrayList<List>();
-		cardsInGame.add(playerDeck.get(0));//will it overwrite if we add cards to indexes 0-3 upon draw.
-		cardsInGame.add(AIDeck1.get(0));
-		cardsInGame.add(AIDeck1.get(0));
-		cardsInGame.add(AIDeck1.get(0));
-		
+	List<List> AIDeck4 = new ArrayList<List>();
+
+	Player human;
+	Player AI1;
+	Player AI2;
+	Player AI3;
+	Player AI4;
+
+	DeckInAndShuffle cardsIn;
+
+	public GamePlay(DeckInAndShuffle d, Player humanPlayer, Player aI1, Player aI2, Player aI3, Player aI4) {
+		cardsIn = d;
+		human = humanPlayer;
+		AI1 = aI1;
+		AI2 = aI2;
+		AI3 = aI3;
+		AI4 = aI4;
+
+	}
+
+	void playgame() throws IOException {
+		cardsIn.setUpDeck();
+		dealDeck();
 		Object activePlayer = getActivePlayer();
+			
+			
+		List<List> cardsInGame = new ArrayList<List>();
+		cardsInGame.add(playerDeck.get(0));// will it overwrite if we add cards to indexes 0-3 upon draw.
+		cardsInGame.add(AIDeck1.get(0));
+		cardsInGame.add(AIDeck1.get(0));
+		cardsInGame.add(AIDeck1.get(0));
+
+		
 		System.out.println("Human Player, your card is: ");
 		System.out.println(playerDeck.get(0));
+
 		
-		
+
 		int chosenAttribute;
 		chosenAttribute = ((Player) activePlayer).chooseAttribute();
-		
+
 		List<List> winnerCard;
 		int max = 0;
-		
-		for (int i = 0; i < cardsInGame.size(); i++)
-		{
-		     if ((int) cardsInGame.get(i).get(chosenAttribute) > max)
-		     {
-		    	 max = (int) cardsInGame.get(i).get(chosenAttribute);
-		    	 winnerCard = cardsInGame.get(i);
-		     }
-		}
-		
-		//now add all cards to the Player the winnerCard belongs to. 
-		//pass active status (firstPlayer?)
-		
-		
-		
-	}
-	
-	
-		Object getActivePlayer() {
-			Random rand = new Random();
-		
-			int activePlayer = rand.nextInt(4);
-			
-			if(activePlayer == 0) {
-				return activePlayer;
-			}else if(activePlayer == 1) {
-				return AI1;
-			}else if (activePlayer == 2) {
-				return AI2;
-			}else {
-				return AI3;
+
+		for (int i = 0; i < cardsInGame.size(); i++) {
+			if ((int) cardsInGame.get(i).get(chosenAttribute) > max) {
+				max = (int) cardsInGame.get(i).get(chosenAttribute);
+				winnerCard = cardsInGame.get(i);
 			}
 		}
+
+		// now add all cards to the Player the winnerCard belongs to.
+		// pass active status (firstPlayer?)
+
+	}
+
+	Object getActivePlayer() {
+		Random rand = new Random();
+
+		int activePlayer = rand.nextInt(4);
+
+		if (activePlayer == 0) {
+			return activePlayer;
+		} else if (activePlayer == 1) {
+			return AI1;
+		} else if (activePlayer == 2) {
+			return AI2;
+		} else {
+			return AI3;
+		}
+	}
+	private void dealDeck() {
+		playerDeck = cardsIn.getStartDeck().subList(0, 7);
+		AIDeck1 = cardsIn.getStartDeck().subList(8, 15);
+		AIDeck2 = cardsIn.getStartDeck().subList(16, 23);
+		AIDeck3 = cardsIn.getStartDeck().subList(24, 31);
+		AIDeck4 = cardsIn.getStartDeck().subList(32, 39);
+	}
+	
 
 	void setPlayerDeck(List<List> dealtPlayerDeck) {
 		playerDeck = dealtPlayerDeck;
 	}
-	
+
 	void setAI1Deck(List<List> dealtAI1Deck) {
 		AIDeck1 = dealtAI1Deck;
 	}
-	
+
 	void setAI2Deck(List<List> dealtAI2Deck) {
 		AIDeck2 = dealtAI2Deck;
 	}
-	
+
 	void setAI3Deck(List<List> dealtAI3Deck) {
 		AIDeck3 = dealtAI3Deck;
 	}
