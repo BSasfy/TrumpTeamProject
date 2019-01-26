@@ -1,0 +1,15 @@
+//Set commmandLineMode to true in TopTrumps.java
+//Copy the following code into the while loop in TopTrumpsCLIApplication.java where it says "your game logic goes here"
+
+
+			DeckInAndShuffle d = new DeckInAndShuffle();
+			Player humanPlayer = new Player();
+			Player AI1 = new Player();
+			Player AI2 = new Player();
+			Player AI3 = new Player();
+			Player AI4 = new Player();
+			GamePlay gp = new GamePlay (d, humanPlayer, AI1, AI2, AI3, AI4);
+			Database db = new Database(gp);
+			
+			gp.playgame();
+			
