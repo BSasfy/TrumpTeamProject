@@ -8,6 +8,15 @@ public class Player {
 	
 	List<List> deck;
 	int chosenAttribute;
+	boolean isStillInGame = true;
+	
+	void setIsStillInGame(boolean isInGame) {
+		isStillInGame = isInGame;
+	}
+	
+	boolean getIsStillInGame(boolean isInGame) {
+		return isStillInGame;
+	}
 	
 	void removeCard () {
 		deck.remove(0);
