@@ -1,6 +1,7 @@
 package commandline;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ public class Player {
 	List<List> deck;
 	int chosenAttribute;
 	boolean isStillInGame = true;
+	String name;
 	
 	void setIsStillInGame(boolean isInGame) {
 		isStillInGame = isInGame;
@@ -16,6 +18,14 @@ public class Player {
 	
 	boolean getIsStillInGame(boolean isInGame) {
 		return isStillInGame;
+	}
+	
+	void setName (String name) {
+		this.name = name;
+	}
+	
+	String getName() {
+		return name;
 	}
 	
 	void removeCard () {
@@ -26,13 +36,20 @@ public class Player {
 		
 	}
 	
-	int chooseAttribute() {
-		
+	int humanChooseAttribute() {
+		//We need to find a way for the player to make sense of the numbers. i.e. display attribute name along with the scores in GamePlay where the card gets displayed each round.
 		Scanner s = new Scanner(System.in);
 		System.out.println("Please enter your chosen attribute 1-5");
 		chosenAttribute=s.nextInt();
 		return chosenAttribute;
 		//HELP
+	}
+	
+	int AIChooseAttribute() {
+		Random rand = new Random();
+
+		chosenAttribute = rand.nextInt(5) + 1; //5 is the maximum and the 1 is the minimum.
+		return chosenAttribute;
 	}
 	
 
