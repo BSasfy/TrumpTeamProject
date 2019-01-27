@@ -1,6 +1,6 @@
-//DO NOT USE!
+//Needed for DeckInAndShuffle
 
-/*package commandline;
+package commandline;
 
 public class IndividualCards {
 
@@ -21,4 +21,4 @@ public class IndividualCards {
 
 	}
 }
-*/
+
