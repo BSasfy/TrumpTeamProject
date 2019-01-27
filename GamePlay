@@ -10,9 +10,11 @@ import java.util.Random;
 public class GamePlay {
 
 	// records need to be a string //
+	
+	List<List> shuffledDeck = new ArrayList<List>();
 	List<List> playerDeck = new ArrayList<List>(); // Why was it <Card>? //Changed from ArrayList to List to be able to
 													// use subLists
-	List<List> AIDeck1;
+	List<List> AIDeck1 = new ArrayList<List>();
 	List<List> AIDeck2 = new ArrayList<List>();
 	List<List> AIDeck3 = new ArrayList<List>();
 	List<List> AIDeck4 = new ArrayList<List>();
@@ -50,12 +52,16 @@ public class GamePlay {
 		int chosenAttribute;
 
 		cardsIn.setUpDeck();
+		shuffledDeck = cardsIn.getStartDeck();
 		dealDeck();
 		activePlayer = getActivePlayer();
+		List<List> cardsInGame = new ArrayList<List>();
+		
 		int j = 0; //so that we avoid the problem of having to remove items from the array, carsInGame.add(playerDeck.get(i));
 		while(true) { //change true to while players are still in game or something similar.
-		// deal cards
-			List<List> cardsInGame = new ArrayList<List>();
+		// play cards
+			
+			cardsInGame.clear();//= null so we clear it every round
 			cardsInGame.add(playerDeck.get(0));// will it overwrite if we add cards to indexes 0-3 upon draw.
 			cardsInGame.add(AIDeck1.get(0));
 			cardsInGame.add(AIDeck2.get(0));
@@ -82,7 +88,7 @@ public class GamePlay {
 			int max = 0;
 	
 			for (int i = 0; i < cardsInGame.size(); i++) {
-				if ((int) cardsInGame.get(i).get(chosenAttribute) > max) {
+				if (((int) cardsInGame.get(i).get(chosenAttribute)) > max) {
 					max = (int) cardsInGame.get(i).get(chosenAttribute);
 					winnerCard = cardsInGame.get(i);
 					if (i == 0) {
@@ -108,13 +114,24 @@ public class GamePlay {
 			System.out.println("The cards played in this round were: " + cardsInGame); // checkpoint, delete in final
 			System.out.println("The winning card is: " + winnerCard);
 			System.out.println("The winner is: " + ((Player) winner).getName());
+		
+			//removing is an issue with 2D Array. Help: https://stackoverflow.com/questions/1805147/how-to-remove-a-row-in-two-dimensional-array
+			/*playerDeck.remove(0); //when we remove does everything shift up one?*/
 			
 			
-			/*playerDeck.remove(0); //when we remove does everything shift up one?
-			AIDeck1.remove(0);
-			AIDeck2.remove(0);
-			AIDeck3.remove(0);
-			AIDeck4.remove(0);*/
+			//chose one style or the other
+			List<List> playerDeckToRemove = new ArrayList<List>();
+			playerDeckToRemove.add(playerDeck.get(0));
+			playerDeck.removeAll(playerDeckToRemove);
+			
+			List<List> AIDeck1ToRemove = new ArrayList<List>();
+			AIDeck1ToRemove.add(AIDeck1.get(0));
+			AIDeck1.removeAll(AIDeck1ToRemove);
+			
+			
+			AIDeck2.removeAll(cardsInGame.get(2));
+			AIDeck3.removeAll(cardsInGame.get(3));
+			AIDeck4.removeAll(cardsInGame.get(4));
 			
 			Collections.shuffle(cardsInGame);
 			winnersDeck.add(cardsInGame);
@@ -122,14 +139,15 @@ public class GamePlay {
 			
 			//passing activePlayer status
 			activePlayer = winner;
+			j++;
 		}
 		
 		
 		
 
-		// now add all cards to the Player the winnerCard belongs to.
-		// pass active status (firstPlayer?)
-		// how do we know if someone is eliminated?
+		// DONE now add all cards to the Player the winnerCard belongs to.
+		// DONE pass active status (firstPlayer?)
+		// DONE how do we know if someone is eliminated?
 		// write statistics
 		// what happens if its a draw?
 		// Gold Plating: change some of the card values so there are no exactly identical ones? Maybe come up with new card names for the ones that are repeated? At least some of them?
@@ -149,17 +167,33 @@ public class GamePlay {
 			return AI1;
 		} else if (activePlayer == 2) {
 			return AI2;
-		} else {
+		} else if (activePlayer == 3){
 			return AI3;
+		}else {
+			return AI4;
 		}
 	}
 
 	private void dealDeck() {
-		playerDeck = cardsIn.getStartDeck().subList(0, 7);
-		AIDeck1 = cardsIn.getStartDeck().subList(8, 15);
-		AIDeck2 = cardsIn.getStartDeck().subList(16, 23);
-		AIDeck3 = cardsIn.getStartDeck().subList(24, 31);
-		AIDeck4 = cardsIn.getStartDeck().subList(32, 39);
+		for (int i=0; i<8; i++) {
+			playerDeck.add(shuffledDeck.get(i));
+		}
+		
+		for (int i=8; i<16; i++) {
+			AIDeck1.add(shuffledDeck.get(i));
+		}
+		
+		for (int i=16; i<24; i++) {
+			AIDeck2.add(shuffledDeck.get(i));
+		}
+		
+		for (int i=24; i<32; i++) {
+			AIDeck3.add(shuffledDeck.get(i));
+		}
+		
+		for (int i=32; i<40; i++) {
+			AIDeck4.add(shuffledDeck.get(i));
+		}
 	}
 
 	void setPlayerDeck(List<List> dealtPlayerDeck) {
