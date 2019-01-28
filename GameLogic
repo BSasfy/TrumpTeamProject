@@ -9,7 +9,7 @@
 			Player AI3 = new Player();
 			Player AI4 = new Player();
 			GamePlay gp = new GamePlay (d, humanPlayer, AI1, AI2, AI3, AI4);
-			Database db = new Database(gp);
+			//Database db = new Database();
 			
 			gp.playgame();
 			
