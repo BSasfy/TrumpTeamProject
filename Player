@@ -11,6 +11,7 @@ public class Player {
 	int chosenAttribute;
 	boolean isStillInGame = true;
 	String name;
+	List currentCard;
 	
 	void setIsStillInGame(boolean isInGame) {
 		isStillInGame = isInGame;
@@ -46,9 +47,15 @@ public class Player {
 	}
 	
 	int AIChooseAttribute() {
-		Random rand = new Random();
-
-		chosenAttribute = rand.nextInt(5) + 1; //5 is the maximum and the 1 is the minimum.
+		
+		int max = 0;
+		for (int i = 1; i < 5; i++) { // this will throw an error when all chosenAttribute values //1 because the first value is the name of the card
+			// are equal.
+			if ((int) currentCard.get(i) > max) {
+				max = (int) currentCard.get(i);
+				chosenAttribute = i;
+			}
+		}
 		return chosenAttribute;
 	}
 	
@@ -60,5 +67,10 @@ public class Player {
 	public void setDeck(List<List> deck) {
 		this.deck = deck;
 	}
+	
+	public void setCurrentCard (List currentCard) {
+		this.currentCard = currentCard;
+	}
+	
 
 }
