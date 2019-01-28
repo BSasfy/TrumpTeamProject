@@ -7,18 +7,27 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+//DONE now add all cards to the Player the winnerCard belongs to.
+// DONE pass active status (firstPlayer?)
+// DONE how do we know if someone is eliminated?
+// program crashes if all chosenAttribute values are equal where we determine "max"
+// write statistics
+// what happens if its a draw?
+// Gold Plating: change some of the card values so there are no exactly
+// identical ones? Maybe come up with new card names for the ones that are
+// repeated? At least some of them?
+// records need to be a string //
+//	create more methods to structure the code better. 
+
 public class GamePlay {
 
-	// records need to be a string //
-	
 	List<List> shuffledDeck = new ArrayList<List>();
-	List<List> playerDeck = new ArrayList<List>(); // Why was it <Card>? //Changed from ArrayList to List to be able to
-													// use subLists
+	List<List> playerDeck = new ArrayList<List>();
 	List<List> AIDeck1 = new ArrayList<List>();
 	List<List> AIDeck2 = new ArrayList<List>();
 	List<List> AIDeck3 = new ArrayList<List>();
 	List<List> AIDeck4 = new ArrayList<List>();
-	
+
 	List<List> winnersDeck;
 
 	Player human;
@@ -49,110 +58,152 @@ public class GamePlay {
 	}
 
 	void playgame() throws IOException {
-		int chosenAttribute;
+		int chosenAttribute = 0;
 
 		cardsIn.setUpDeck();
 		shuffledDeck = cardsIn.getStartDeck();
 		dealDeck();
 		activePlayer = getActivePlayer();
 		List<List> cardsInGame = new ArrayList<List>();
-		
-		int j = 0; //so that we avoid the problem of having to remove items from the array, carsInGame.add(playerDeck.get(i));
-		while(true) { //change true to while players are still in game or something similar.
-		// play cards
-			
-			cardsInGame.clear();//= null so we clear it every round
-			cardsInGame.add(playerDeck.get(0));// will it overwrite if we add cards to indexes 0-3 upon draw.
-			cardsInGame.add(AIDeck1.get(0));
-			cardsInGame.add(AIDeck2.get(0));
-			cardsInGame.add(AIDeck3.get(0));
-			cardsInGame.add(AIDeck4.get(0));
-	
+
+		int numberOfPlayers;
+
+		while (true) {
+
+			// play cards
+			winner = null;
+			cardsInGame.clear();
+			numberOfPlayers = 5;
+
+			if (human.isStillInGame) {
+				cardsInGame.add(playerDeck.get(0));
+				System.out.println("Human Player, your card is: ");
+				System.out.println(playerDeck.get(0));
+			}
+			if (AI1.isStillInGame) {
+				cardsInGame.add(AIDeck1.get(0));
+			}
+			if (AI2.isStillInGame) {
+				cardsInGame.add(AIDeck2.get(0));
+			}
+			if (AI3.isStillInGame) {
+				cardsInGame.add(AIDeck3.get(0));
+			}
+			if (AI4.isStillInGame) {
+				cardsInGame.add(AIDeck4.get(0));
+			}
+
 			// display card and choose attribute
-			System.out.println("Human Player, your card is: ");
-			System.out.println(playerDeck.get(0));
-	
+
 			System.out.println(((Player) activePlayer).getName() + "! It's your turn!");
-	
+
 			if ((Player) activePlayer == human) {
 				chosenAttribute = ((Player) activePlayer).humanChooseAttribute();
 			} else {
 				chosenAttribute = ((Player) activePlayer).AIChooseAttribute();
 			} // Exception Handling needed, if they enter numbers other than 1 or 5, if they
 				// enter something other than an int, etc.
-	
+
 			System.out.println("The attribute you chose is: " + chosenAttribute);
-	
+
 			// compare cards
 			List<List> winnerCard = null;
 			int max = 0;
-	
-			for (int i = 0; i < cardsInGame.size(); i++) {
+
+			for (int i = 0; i < cardsInGame.size(); i++) { // this will throw an error when all chosenAttribute values
+															// are equal.
 				if (((int) cardsInGame.get(i).get(chosenAttribute)) > max) {
 					max = (int) cardsInGame.get(i).get(chosenAttribute);
 					winnerCard = cardsInGame.get(i);
-					if (i == 0) {
-						winner = human;
-						winnersDeck = playerDeck;
-					} else if (i == 1) {
-						winner = AI1;
-						winnersDeck = AIDeck1;
-					} else if (i == 2) {
-						winner = AI2;
-						winnersDeck = AIDeck2;
-					} else if (i == 3) {
-						winner = AI3;
-						winnersDeck = AIDeck3;
-					} else if (i == 4) {
-						winner = AI4;
-						winnersDeck = AIDeck4;
-					}
+				}
+				if (human.isStillInGame && winnerCard == playerDeck.get(0)) {
+					winner = human;
+					winnersDeck = playerDeck;
+				} else if (AI1.isStillInGame && winnerCard == AIDeck1.get(0)) {
+					winner = AI1;
+					winnersDeck = AIDeck1;
+				} else if (AI2.isStillInGame && winnerCard == AIDeck2.get(0)) {
+					winner = AI2;
+					winnersDeck = AIDeck2;
+				} else if (AI3.isStillInGame && winnerCard == AIDeck3.get(0)) {
+					winner = AI3;
+					winnersDeck = AIDeck3;
+				} else if (AI4.isStillInGame && winnerCard == AIDeck4.get(0)) {
+					winner = AI4;
+					winnersDeck = AIDeck4;
 				}
 			}
-	
-			// remove cards from decks and add it all to winners
-			System.out.println("The cards played in this round were: " + cardsInGame); // checkpoint, delete in final
+
+			System.out.println("The cards played in this round were: " + cardsInGame + cardsInGame.size()); // checkpoint,
+																											// delete in
+																											// final
 			System.out.println("The winning card is: " + winnerCard);
 			System.out.println("The winner is: " + ((Player) winner).getName());
-		
-			//removing is an issue with 2D Array. Help: https://stackoverflow.com/questions/1805147/how-to-remove-a-row-in-two-dimensional-array
-			/*playerDeck.remove(0); //when we remove does everything shift up one?*/
-			
-			
-			//chose one style or the other
-			List<List> playerDeckToRemove = new ArrayList<List>();
-			playerDeckToRemove.add(playerDeck.get(0));
-			playerDeck.removeAll(playerDeckToRemove);
-			
-			List<List> AIDeck1ToRemove = new ArrayList<List>();
-			AIDeck1ToRemove.add(AIDeck1.get(0));
-			AIDeck1.removeAll(AIDeck1ToRemove);
-			
-			
-			AIDeck2.removeAll(cardsInGame.get(2));
-			AIDeck3.removeAll(cardsInGame.get(3));
-			AIDeck4.removeAll(cardsInGame.get(4));
-			
-			Collections.shuffle(cardsInGame);
-			winnersDeck.add(cardsInGame);
-			
-			
-			//passing activePlayer status
-			activePlayer = winner;
-			j++;
-		}
-		
-		
-		
 
-		// DONE now add all cards to the Player the winnerCard belongs to.
-		// DONE pass active status (firstPlayer?)
-		// DONE how do we know if someone is eliminated?
-		// write statistics
-		// what happens if its a draw?
-		// Gold Plating: change some of the card values so there are no exactly identical ones? Maybe come up with new card names for the ones that are repeated? At least some of them?
-		
-		
+			if (human.isStillInGame) {
+				playerDeck.remove(playerDeck.get(0));
+			}
+
+			if (AI1.isStillInGame) {
+				AIDeck1.remove(AIDeck1.get(0));
+			}
+
+			if (AI2.isStillInGame) {
+				AIDeck2.remove(AIDeck2.get(0));
+			}
+
+			if (AI3.isStillInGame) {
+				AIDeck3.remove(AIDeck3.get(0));
+			}
+
+			if (AI4.isStillInGame) {
+				AIDeck4.remove(AIDeck4.get(0));
+			}
+
+			Collections.shuffle(cardsInGame);
+
+			for (int i = 0; i < cardsInGame.size(); i++) {
+				winnersDeck.add(cardsInGame.get(i));
+			}
+
+			// passing activePlayer status
+			activePlayer = winner;
+
+			System.out.println(numberOfPlayers);
+
+			if (playerDeck.isEmpty()) {
+				human.setIsStillInGame(false);
+				System.out.println("Human is out of the game");
+
+			}
+			if (AIDeck1.isEmpty()) {
+				AI1.setIsStillInGame(false);
+				System.out.println("AI1 is out of the game");
+				numberOfPlayers--;
+			}
+			if (AIDeck2.isEmpty()) {
+				AI2.setIsStillInGame(false);
+				System.out.println("AI2 is out of the game");
+				numberOfPlayers--;
+			}
+			if (AIDeck3.isEmpty()) {
+				AI3.setIsStillInGame(false);
+				System.out.println("AI3 is out of the game");
+				numberOfPlayers--;
+			}
+			if (AIDeck4.isEmpty()) {
+				AI4.setIsStillInGame(false);
+				System.out.println("AI4 is out of the game");
+				numberOfPlayers--;
+			}
+
+			if (numberOfPlayers == 1) {
+				break;
+			}
+
+		}
+
+		System.out.println("The overall winner is: " + ((Player) winner).getName() + ". Congratulations!");
 
 	}
 
@@ -167,49 +218,32 @@ public class GamePlay {
 			return AI1;
 		} else if (activePlayer == 2) {
 			return AI2;
-		} else if (activePlayer == 3){
+		} else if (activePlayer == 3) {
 			return AI3;
-		}else {
+		} else {
 			return AI4;
 		}
 	}
 
 	private void dealDeck() {
-		for (int i=0; i<8; i++) {
+		for (int i = 0; i < 8; i++) {
 			playerDeck.add(shuffledDeck.get(i));
 		}
-		
-		for (int i=8; i<16; i++) {
+
+		for (int i = 8; i < 16; i++) {
 			AIDeck1.add(shuffledDeck.get(i));
 		}
-		
-		for (int i=16; i<24; i++) {
+
+		for (int i = 16; i < 24; i++) {
 			AIDeck2.add(shuffledDeck.get(i));
 		}
-		
-		for (int i=24; i<32; i++) {
+
+		for (int i = 24; i < 32; i++) {
 			AIDeck3.add(shuffledDeck.get(i));
 		}
-		
-		for (int i=32; i<40; i++) {
+
+		for (int i = 32; i < 40; i++) {
 			AIDeck4.add(shuffledDeck.get(i));
 		}
 	}
-
-	void setPlayerDeck(List<List> dealtPlayerDeck) {
-		playerDeck = dealtPlayerDeck;
-	}
-
-	void setAI1Deck(List<List> dealtAI1Deck) {
-		AIDeck1 = dealtAI1Deck;
-	}
-
-	void setAI2Deck(List<List> dealtAI2Deck) {
-		AIDeck2 = dealtAI2Deck;
-	}
-
-	void setAI3Deck(List<List> dealtAI3Deck) {
-		AIDeck3 = dealtAI3Deck;
-	}
-
 }
