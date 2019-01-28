@@ -10,10 +10,9 @@ import java.util.List;
 public class DeckInAndShuffle {
 
 	String[] lineStrArr = new String[5];
-	ArrayList<List> startDeck = new ArrayList<>(); //17? //changed it from List<List> to ArrayList<List> so it works with Dealing. 
-	//List shuffledDeck = new ArrayList<>();
+	ArrayList<List> startDeck = new ArrayList<>(); //changed it from List<List> to ArrayList<List> so it works with Dealing. 
 	List<String> LineStrArr = new ArrayList<>();
-	IndividualCards cards; //Why is it  here?
+	IndividualCards cards; 
 	List card;
 	String[] fieldNames;
 
@@ -25,16 +24,11 @@ public class DeckInAndShuffle {
 		// data structure for inserting the values
 		while ((line=br.readLine()) != null) {
 			
-			//can we just insert separateDeck() here?
-			// split the line you read after the
 			startDeck.add(separateDeck(line));
-			//br.read();
-
 		}
 
 		br.close();
 		shuffleDeck();
-		System.out.println(startDeck);
 	}
 
 	public List<IndividualCards> separateDeck(String line) {
@@ -64,14 +58,11 @@ public class DeckInAndShuffle {
 
 	public ArrayList getStartDeck() {
 
-		/*try {
-			setUpDeck();
-			// shuffleCard();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		return startDeck;
+	}
+	
+	public String[] getFieldNames() {
+		return fieldNames;
 	}
 
 }
