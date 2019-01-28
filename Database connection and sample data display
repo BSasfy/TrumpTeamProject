@@ -1,68 +1,90 @@
+//package commandline;
+
 import java.sql.*;
 
+public class Database {
+	
+	int gameRecord,humanWinRecord,aiWinRecord,averageDraws,longestGame;
+	int gameRecord1=0;
+	int humanWinRecord1=0;
+	int aiWinRecord1=0;
+	int averageDraws1=0;
+	int longestGame1=0;
+	public Database() {
+		// TODO Auto-generated constructor stub
+	}
 
-
-public class Program 
-{
-
-	public static void main(String[] args) 
-	{
+	public void LoadDatabase() {
+		
 		try {
 			Connection connection = null;
-			try 
-			{
+			try {
 				Class.forName("org.postgresql.Driver");
-			} 
-			catch (ClassNotFoundException e) 
-			{
+			} catch (ClassNotFoundException e) {
 				System.out.println("Could not find JDBC Driver");
 				e.printStackTrace();
 				return;
-			} 
-
-			try 
-			{
-				Class.forName("org.postgresql.Driver");
-				connection =DriverManager.getConnection("jdbc:postgresql://localhost:5432/FinalProject","postgres","root");
 			}
-			catch (Exception e) 
-			{
-				System.out.println("Could not load class"
-						+"org.postgresql.Driver");
+
+			try {
+				Class.forName("org.postgresql.Driver");
+				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/FinalProject", "postgres",
+						"root");
+			} catch (Exception e) {
+				System.out.println("Could not load class" + "org.postgresql.Driver");
 				e.printStackTrace();
 			}
-			if (connection != null)
-			{
+			if (connection != null) {
 				try {
 					Statement statement = connection.createStatement();
-					String insert="INSERT INTO GAMESTATISTICS values(5,2,1,5.0,7)";
+					String insert = "INSERT INTO GAMESTATISTICS values("+gameRecord+gameRecord1+","+humanWinRecord+humanWinRecord1+","+aiWinRecord+aiWinRecord1+","+averageDraws+averageDraws1+","+longestGame+ ")";
 					statement.executeUpdate(insert);
 					System.out.println("Statement successfully inserted");
-					
-					
-//										
-					ResultSet result =
-							statement.executeQuery("SELECT * FROM GAMESTATISTICS");
-					while(result.next()){
+
+//											
+					ResultSet result = statement.executeQuery("SELECT * FROM GAMESTATISTICS");
+					gameRecord = result.getInt("numberofgames");
+					humanWinRecord= result.getInt("numberhumanwins");
+					aiWinRecord=result.getInt("numberaiwins");
+					averageDraws=result.getInt("averagenumberdraws");
+					longestGame=result.getInt("longestgame");
+					if(longestGame1>longestGame)
+					{
+						longestGame1=longestGame;
+					}
+					while (result.next()) {
 						System.out.println("Game Statistics:");
-						System.out.println(" Number of Games: "+result.getInt("numberofgames")+"\n Number of Human Wins: "+result.getInt("numberhumanwins")+
-								"\n Number of AI Wins: "+result.getInt("numberaiwins")+"\n Average number of Draws: "+result.getInt("averagenumberdraws")
-								+"\n Longest Game: "+result.getInt("longestgame"));
+						System.out.println(" Number of Games: " + result.getInt("numberofgames")
+								+ "\n Number of Human Wins: " + result.getInt("numberhumanwins")
+								+ "\n Number of AI Wins: " + result.getInt("numberaiwins")
+								+ "\n Average number of Draws: " + result.getInt("averagenumberdraws")
+								+ "\n Longest Game: " + result.getInt("longestgame"));
 						System.out.println();
 					}
-					
-				}
-				catch (SQLException e)
-				{
+
+				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				
+
 			}
-		}
-		catch(Exception e) 
-		{
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
+	
+	void setGameRecord(int gr) {
+		gameRecord1 = gr;
+	}
+	void sethumanWinRecord(int hwr) {
+		humanWinRecord1 = hwr;
+	}
+	void setaiWinRecord(int awr) {
+		aiWinRecord1 = awr;
+	}
+	void setaverageDraws(int ad) {
+		averageDraws1 = ad;
+	}
+	void setlongestGame(int lg) {
+		longestGame1 = lg;
+	}
 }
-
