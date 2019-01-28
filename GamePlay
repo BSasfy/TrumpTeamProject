@@ -50,11 +50,11 @@ public class GamePlay {
 	DeckInAndShuffle cardsIn;
 	String[] attributeNames;
 	
-	int numberOfHumanWins;
-	int numberOfAI1Wins;
-	int numberOfAI2Wins;
-	int numberOfAI3Wins;
-	int numberOfAI4Wins;
+	int numberOfHumanWins = 0;
+	int numberOfAI1Wins = 0;
+	int numberOfAI2Wins = 0;
+	int numberOfAI3Wins = 0;
+	int numberOfAI4Wins = 0;
 
 	public GamePlay(DeckInAndShuffle d, Player humanPlayer, Player aI1, Player aI2, Player aI3, Player aI4) {
 		cardsIn = d;
@@ -147,6 +147,7 @@ public class GamePlay {
 					max = (int) cardsInGame.get(i).get(chosenAttribute);
 					winnerCard = cardsInGame.get(i);
 				}
+			}
 				if (human.isStillInGame && winnerCard == playerDeck.get(0)) {
 					winner = human;
 					winnersDeck = playerDeck;
@@ -168,7 +169,7 @@ public class GamePlay {
 					winnersDeck = AIDeck4;
 					numberOfAI4Wins++;
 				}
-			}
+		
 
 			System.out.println("This was round " + j + ". The winner is: " + ((Player) winner).getName() + ".");
 			System.out.println("The winning card was: " + winnerCard.get(0));
@@ -203,9 +204,7 @@ public class GamePlay {
 
 			// passing activePlayer status
 			activePlayer = winner;
-
-			System.out.println(numberOfPlayers);
-			
+		
 			
 			//find a way for this to get displayed only once? Maybe just Gold Plating. 
 			if (playerDeck.isEmpty()) {
