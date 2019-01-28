@@ -7,6 +7,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+
+//ATTENTION! human player is deactivated and numberOfPlayers == 2 at break. 
+
+
 //DONE now add all cards to the Player the winnerCard belongs to.
 // DONE pass active status (firstPlayer?)
 // DONE how do we know if someone is eliminated?
@@ -82,7 +86,7 @@ public class GamePlay {
 		List<List> cardsInGame = new ArrayList<List>();
 
 		int numberOfPlayers;
-
+		human.setIsStillInGame(false);
 		System.out.println("Game Start");
 		int j = 0;
 
@@ -233,6 +237,7 @@ public class GamePlay {
 			if (playerDeck.isEmpty()) {
 				human.setIsStillInGame(false);
 				System.out.println("Human is out of the game");
+				numberOfPlayers--;
 
 			}
 			if (AIDeck1.isEmpty()) {
@@ -255,8 +260,8 @@ public class GamePlay {
 				System.out.println("AI4 is out of the game");
 				numberOfPlayers--;
 			}
-
-			if (numberOfPlayers == 1) {
+			System.out.println(numberOfPlayers);
+			if (numberOfPlayers == 2) {
 				break;
 			}
 
