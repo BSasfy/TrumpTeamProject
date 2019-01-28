@@ -39,7 +39,7 @@ public class Player {
 	int humanChooseAttribute() {
 		//We need to find a way for the player to make sense of the numbers. i.e. display attribute name along with the scores in GamePlay where the card gets displayed each round.
 		Scanner s = new Scanner(System.in);
-		System.out.println("Please enter your chosen attribute 1-5");
+		System.out.println("Please enter the number for your chosen category: ");
 		chosenAttribute=s.nextInt();
 		return chosenAttribute;
 		//HELP
