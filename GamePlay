@@ -273,7 +273,19 @@ public class GamePlay {
 				+ ":" + numberOfAI1Wins + "\n    " + AI2.getName() + ":" + numberOfAI2Wins + "\n    " + AI3.getName()
 				+ ":" + numberOfAI3Wins + "\n    " + AI4.getName() + ":" + numberOfAI4Wins);
 
-		db.setwhatever(1);
+		
+		db.setGameRecord(1);
+		if(((Player) winner) ==human) 
+		{
+			db.sethumanWinRecord(1);
+		}
+		else 
+		{
+		db.setaiWinRecord(1);
+		}
+		db.setaverageDraws(1);
+		
+		db.setlongestGame(j);
 
 	}
 
