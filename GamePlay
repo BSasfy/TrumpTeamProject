@@ -1,5 +1,3 @@
-package commandline;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,7 +44,10 @@ public class GamePlay {
 	Player AI2;
 	Player AI3;
 	Player AI4;
-
+	int aicount=0;
+	int hcount=0;
+	int gcount=0;
+	int dcount=0;
 	Object activePlayer;
 	Object winner;
 
@@ -60,7 +61,8 @@ public class GamePlay {
 	int numberOfAI3Wins = 0;
 	int numberOfAI4Wins = 0;
 
-	public GamePlay(DeckInAndShuffle d, Player humanPlayer, Player aI1, Player aI2, Player aI3, Player aI4) {
+	public GamePlay(DeckInAndShuffle d, Player humanPlayer, Player aI1, Player aI2, Player aI3, Player aI4,Database db) {
+		this.db=db;
 		cardsIn = d;
 		human = humanPlayer;
 		AI1 = aI1;
@@ -171,6 +173,7 @@ public class GamePlay {
 				if (((int) cardsInGame.get(i).get(chosenAttribute)) == max) {
 					max = (int) cardsInGame.get(i).get(chosenAttribute);
 					winnerCard = cardsInGame.get(i);
+					dcount++;
 				}
 			}
 			if (human.isStillInGame && winnerCard == playerDeck.get(0)) {
@@ -273,17 +276,20 @@ public class GamePlay {
 				+ ":" + numberOfAI1Wins + "\n    " + AI2.getName() + ":" + numberOfAI2Wins + "\n    " + AI3.getName()
 				+ ":" + numberOfAI3Wins + "\n    " + AI4.getName() + ":" + numberOfAI4Wins);
 
-		
-		db.setGameRecord(1);
+
+		db.setGameRecord(gcount);
+		gcount++;
 		if(((Player) winner) ==human) 
 		{
-			db.sethumanWinRecord(1);
+			db.sethumanWinRecord(hcount);
+			hcount++;
 		}
 		else 
 		{
-		db.setaiWinRecord(1);
+		db.setaiWinRecord(aicount);
+		aicount++;
 		}
-		db.setaverageDraws(1);
+		db.setaverageDraws(dcount);
 		
 		db.setlongestGame(j);
 
