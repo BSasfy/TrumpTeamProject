@@ -1,31 +1,30 @@
+package commandline;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-
 //ATTENTION! human player is deactivated and numberOfPlayers == 2 at break. 
-
 
 //DONE now add all cards to the Player the winnerCard belongs to.
 // DONE pass active status (firstPlayer?)
 // DONE how do we know if someone is eliminated?
 // DONE program crashes if all chosenAttribute values are equal where we determine "max"
 // DONE write statistics - each game
-// IMPORTANT what happens if its a draw?
+// DONE find a way to draw that arrow pointing to the winning category in the winner card like in the example document on moodle. 
+// DONE IMPORTANT what happens if its a draw?
+// DONE Exception Handling needed for Player Class humanChooseAttribute(), if they enter numbers other than 1 or 5, if they enter something other than an int, etc.
 /* IMPORTANT implement: Do you want to see past results or play a game?
 			*1: Print Game Statistics
 			*2: Play game*/
 // IMPORTANT Implement game statistics - database
-// Gold Plating: change some of the card values so there are no exactly
+/*Gold Plating: change some of the card values so there are no exactly
 // identical ones? Maybe come up with new card names for the ones that are repeated? At least some of them?
-// records need to be a string 
+ records need to be a string*/
 //	create more methods to structure the code better. 
 // double check class, method, array and attribute names based on Java Naming Convention. 
-// Exception Handling needed for Player Class humanChooseAttribute(), if they enter numbers other than 1 or 5, if they enter something other than an int, etc.
-// find a way to draw that arrow pointing to the winning category in the winner card like in the example document on moodle. 
 // find a way to diplay it only once when a player is out of the game, not every round. 
 
 public class GamePlay {
@@ -37,6 +36,8 @@ public class GamePlay {
 	List<List> AIDeck3 = new ArrayList<List>();
 	List<List> AIDeck4 = new ArrayList<List>();
 
+	Player p = new Player();
+
 	List<List> winnersDeck;
 
 	Player human;
@@ -44,10 +45,12 @@ public class GamePlay {
 	Player AI2;
 	Player AI3;
 	Player AI4;
-	int aicount=0;
-	int hcount=0;
-	int gcount=0;
-	int dcount=0;
+
+	int aicount = 0;
+	int hcount = 0;
+	int gcount = 0;
+	int dcount = 0;
+
 	Object activePlayer;
 	Object winner;
 
@@ -61,8 +64,7 @@ public class GamePlay {
 	int numberOfAI3Wins = 0;
 	int numberOfAI4Wins = 0;
 
-	public GamePlay(DeckInAndShuffle d, Player humanPlayer, Player aI1, Player aI2, Player aI3, Player aI4,Database db) {
-		this.db=db;
+	public GamePlay(DeckInAndShuffle d, Player humanPlayer, Player aI1, Player aI2, Player aI3, Player aI4) {
 		cardsIn = d;
 		human = humanPlayer;
 		AI1 = aI1;
@@ -88,7 +90,7 @@ public class GamePlay {
 		List<List> cardsInGame = new ArrayList<List>();
 
 		int numberOfPlayers;
-		human.setIsStillInGame(false);
+		// human.setIsStillInGame(false);
 		System.out.println("Game Start");
 		int j = 0;
 
@@ -162,112 +164,157 @@ public class GamePlay {
 			// compare cards
 			List<List> winnerCard = null;
 			int max = 0;
+			try {
+				for (int i = 0; i < cardsInGame.size(); i++) { // this will throw an error when all chosenAttribute
+																// values
+																// are equal.
+					if (((int) cardsInGame.get(i).get(chosenAttribute)) > max) {
+						max = (int) cardsInGame.get(i).get(chosenAttribute);
+						winnerCard = cardsInGame.get(i);
+					}
 
-			for (int i = 0; i < cardsInGame.size(); i++) { // this will throw an error when all chosenAttribute values
-															// are equal.
-				if (((int) cardsInGame.get(i).get(chosenAttribute)) > max) {
-					max = (int) cardsInGame.get(i).get(chosenAttribute);
-					winnerCard = cardsInGame.get(i);
+					if (((int) cardsInGame.get(i).get(chosenAttribute)) == max) {
+						max = (int) cardsInGame.get(i).get(chosenAttribute);
+						winnerCard = cardsInGame.get(i);
+					}
+				}
+				if (human.isStillInGame && winnerCard == playerDeck.get(0)) {
+					winner = human;
+					winnersDeck = playerDeck;
+					numberOfHumanWins++;
+				} else if (AI1.isStillInGame && winnerCard == AIDeck1.get(0)) {
+					winner = AI1;
+					winnersDeck = AIDeck1;
+					numberOfAI1Wins++;
+				} else if (AI2.isStillInGame && winnerCard == AIDeck2.get(0)) {
+					winner = AI2;
+					winnersDeck = AIDeck2;
+					numberOfAI2Wins++;
+				} else if (AI3.isStillInGame && winnerCard == AIDeck3.get(0)) {
+					winner = AI3;
+					winnersDeck = AIDeck3;
+					numberOfAI3Wins++;
+				} else if (AI4.isStillInGame && winnerCard == AIDeck4.get(0)) {
+					winner = AI4;
+					winnersDeck = AIDeck4;
+					numberOfAI4Wins++;
 				}
 
-				if (((int) cardsInGame.get(i).get(chosenAttribute)) == max) {
-					max = (int) cardsInGame.get(i).get(chosenAttribute);
-					winnerCard = cardsInGame.get(i);
-					dcount++;
+				System.out.println("This was round " + j + ". The winner is: " + ((Player) winner).getName() + ".");
+				System.out.println("The winning card was: " + winnerCard.get(0));
+				if (chosenAttribute == 1) {
+					System.out.println("    >" + attributeNames[1] + ": " + winnerCard.get(1) + " <==");
+				} else if (chosenAttribute != 1) {
+					System.out.println("    >" + attributeNames[1] + ": " + winnerCard.get(1));
 				}
-			}
-			if (human.isStillInGame && winnerCard == playerDeck.get(0)) {
-				winner = human;
-				winnersDeck = playerDeck;
-				numberOfHumanWins++;
-			} else if (AI1.isStillInGame && winnerCard == AIDeck1.get(0)) {
-				winner = AI1;
-				winnersDeck = AIDeck1;
-				numberOfAI1Wins++;
-			} else if (AI2.isStillInGame && winnerCard == AIDeck2.get(0)) {
-				winner = AI2;
-				winnersDeck = AIDeck2;
-				numberOfAI2Wins++;
-			} else if (AI3.isStillInGame && winnerCard == AIDeck3.get(0)) {
-				winner = AI3;
-				winnersDeck = AIDeck3;
-				numberOfAI3Wins++;
-			} else if (AI4.isStillInGame && winnerCard == AIDeck4.get(0)) {
-				winner = AI4;
-				winnersDeck = AIDeck4;
-				numberOfAI4Wins++;
-			}
+				if (chosenAttribute == 2) {
+					System.out.println("    >" + attributeNames[2] + ": " + winnerCard.get(2) + " <==");
+				}
 
-			System.out.println("This was round " + j + ". The winner is: " + ((Player) winner).getName() + ".");
-			System.out.println("The winning card was: " + winnerCard.get(0));
-			System.out.println("    >" + attributeNames[1] + ": " + winnerCard.get(1) + "\n    >" + attributeNames[2]
-					+ ": " + winnerCard.get(2) + "\n    >" + attributeNames[3] + ": " + winnerCard.get(3) + "\n    >"
-					+ attributeNames[4] + ": " + winnerCard.get(4) + "\n    >" + attributeNames[5] + ": "
-					+ winnerCard.get(5));
-			// find a way to draw that arrow pointing to the winning category in the winner
-			// card
+				else if (chosenAttribute != 2) {
+					System.out.println("    >" + attributeNames[2] + ": " + winnerCard.get(2));
+				}
+				if (chosenAttribute == 3) {
+					System.out.println("    >" + attributeNames[3] + ": " + winnerCard.get(3) + " <==");
+				} else if (chosenAttribute != 3) {
+					System.out.println("    >" + attributeNames[3] + ": " + winnerCard.get(3));
+				}
+				if (chosenAttribute == 4) {
+					System.out.println("    >" + attributeNames[4] + ": " + winnerCard.get(4) + " <==");
+				} else if (chosenAttribute != 4) {
+					System.out.println("    >" + attributeNames[4] + ": " + winnerCard.get(4));
+				}
+				if (chosenAttribute == 5) {
+					System.out.println("    >" + attributeNames[5] + ": " + winnerCard.get(5) + " <==");
+				} else if (chosenAttribute != 5) {
+					System.out.println("    >" + attributeNames[5] + ": " + winnerCard.get(5));
+				}
+				/*
+				 * System.out.println("    >" + attributeNames[1] + ": " + winnerCard.get(1) +
+				 * "\n    >" + attributeNames[2] + ": " + winnerCard.get(2) + "\n    >" +
+				 * attributeNames[3] + ": " + winnerCard.get(3) + "\n    >" + attributeNames[4]
+				 * + ": " + winnerCard.get(4) + "\n    >" + attributeNames[5] + ": " +
+				 * winnerCard.get(5));
+				 */
+				// find a way to draw that arrow pointing to the winning category in the winner
+				// card
 
-			if (human.isStillInGame) {
-				playerDeck.remove(playerDeck.get(0));
-			}
+				if (human.isStillInGame == true) {
+					playerDeck.remove(playerDeck.get(0));
+				}
 
-			if (AI1.isStillInGame) {
-				AIDeck1.remove(AIDeck1.get(0));
-			}
+				if (AI1.isStillInGame == true) {
+					AIDeck1.remove(AIDeck1.get(0));
+				}
 
-			if (AI2.isStillInGame) {
-				AIDeck2.remove(AIDeck2.get(0));
-			}
+				if (AI2.isStillInGame == true) {
+					AIDeck2.remove(AIDeck2.get(0));
+				}
 
-			if (AI3.isStillInGame) {
-				AIDeck3.remove(AIDeck3.get(0));
-			}
+				if (AI3.isStillInGame == true) {
+					AIDeck3.remove(AIDeck3.get(0));
+				}
 
-			if (AI4.isStillInGame) {
-				AIDeck4.remove(AIDeck4.get(0));
-			}
+				if (AI4.isStillInGame == true) {
+					AIDeck4.remove(AIDeck4.get(0));
+				}
 
-			Collections.shuffle(cardsInGame);
+				Collections.shuffle(cardsInGame);
 
-			for (int i = 0; i < cardsInGame.size(); i++) {
-				winnersDeck.add(cardsInGame.get(i));
-			}
+				for (int i = 0; i < cardsInGame.size(); i++) {
+					winnersDeck.add(cardsInGame.get(i));
+				}
 
-			// passing activePlayer status
-			activePlayer = winner;
+				// passing activePlayer status
+				activePlayer = winner;
 
-			// find a way for this to get displayed only once? Maybe just Gold Plating.
-			if (playerDeck.isEmpty()) {
-				human.setIsStillInGame(false);
-				System.out.println("Human is out of the game");
-				numberOfPlayers--;
+				// find a way for this to get displayed only once? Maybe just Gold Plating.
+				if (playerDeck.isEmpty()) {
+					human.setIsStillInGame(false);
+					System.out.println("Human is out of the game");
+					numberOfPlayers--;
 
-			}
-			if (AIDeck1.isEmpty()) {
-				AI1.setIsStillInGame(false);
-				System.out.println("AI1 is out of the game");
-				numberOfPlayers--;
-			}
-			if (AIDeck2.isEmpty()) {
-				AI2.setIsStillInGame(false);
-				System.out.println("AI2 is out of the game");
-				numberOfPlayers--;
-			}
-			if (AIDeck3.isEmpty()) {
-				AI3.setIsStillInGame(false);
-				System.out.println("AI3 is out of the game");
-				numberOfPlayers--;
-			}
-			if (AIDeck4.isEmpty()) {
-				AI4.setIsStillInGame(false);
-				System.out.println("AI4 is out of the game");
-				numberOfPlayers--;
-			}
-			System.out.println(numberOfPlayers);
-			if (numberOfPlayers == 2) {
-				break;
-			}
+				}
+				if (AIDeck1.isEmpty()) {
+					AI1.setIsStillInGame(false);
+					System.out.println("AI1 is out of the game");
+					numberOfPlayers--;
+				}
+				if (AIDeck2.isEmpty()) {
+					AI2.setIsStillInGame(false);
+					System.out.println("AI2 is out of the game");
+					numberOfPlayers--;
+				}
+				if (AIDeck3.isEmpty()) {
+					AI3.setIsStillInGame(false);
+					System.out.println("AI3 is out of the game");
+					numberOfPlayers--;
+				}
+				if (AIDeck4.isEmpty()) {
+					AI4.setIsStillInGame(false);
+					System.out.println("AI4 is out of the game");
+					numberOfPlayers--;
+				}
+				System.out.println(numberOfPlayers);
+				if (numberOfPlayers == 1) {
+					break;
+				}
+				Thread.sleep(2000);
 
+			} catch (Exception e) {
+
+				j--;
+				try {
+					System.out.println("You did not enter a number between 1-5");
+					Thread.sleep(2000);
+					System.out.println("Please enter a number between 1-5");
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				continue;
+			}
 		}
 
 		System.out.println("Game End.");
@@ -276,21 +323,17 @@ public class GamePlay {
 				+ ":" + numberOfAI1Wins + "\n    " + AI2.getName() + ":" + numberOfAI2Wins + "\n    " + AI3.getName()
 				+ ":" + numberOfAI3Wins + "\n    " + AI4.getName() + ":" + numberOfAI4Wins);
 
-
 		db.setGameRecord(gcount);
 		gcount++;
-		if(((Player) winner) ==human) 
-		{
+		if (((Player) winner) == human) {
 			db.sethumanWinRecord(hcount);
 			hcount++;
-		}
-		else 
-		{
-		db.setaiWinRecord(aicount);
-		aicount++;
+		} else {
+			db.setaiWinRecord(aicount);
+			aicount++;
 		}
 		db.setaverageDraws(dcount);
-		
+
 		db.setlongestGame(j);
 
 	}
