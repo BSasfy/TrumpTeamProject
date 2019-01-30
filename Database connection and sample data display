@@ -36,9 +36,10 @@ public class Database {
 			}
 			if (connection != null) {
 				try {
-					Statement statement = connection.createStatement();
+					Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 					ResultSet result = statement.executeQuery("SELECT * FROM GAMESTATISTICS");
-					if(result.next()) 
+					result.afterLast();
+					if(result.previous()) 
 					{
 						gameRecord = result.getInt("numberofgames");
 						humanWinRecord= result.getInt("numberhumanwins");
@@ -57,7 +58,8 @@ public class Database {
 					String insert = "INSERT INTO GAMESTATISTICS values("+GR+","+HW+","+AW+","+AD+","+longestGame1+ ")";
 					statement.executeUpdate(insert);
 					System.out.println("Statement successfully inserted");
-					//DisplayDataBase();
+					statement.close();
+					
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -109,6 +111,7 @@ public class Database {
 								+ "\n Longest Game: " + result.getInt("longestgame"));
 						System.out.println();
 					}
+					statement.close();
 				}
 					catch (SQLException e) 
 				{
