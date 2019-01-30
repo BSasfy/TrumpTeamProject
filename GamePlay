@@ -44,9 +44,6 @@ public class GamePlay {
 	Player AI3;
 	Player AI4;
 
-	int aicount = 0;
-	int hcount = 0;
-	int gcount = 0;
 	int dcount = 0;
 
 	Object activePlayer;
@@ -312,17 +309,18 @@ public class GamePlay {
 				+ ":" + numberOfAI1Wins + "\n    " + AI2.getName() + ":" + numberOfAI2Wins + "\n    " + AI3.getName()
 				+ ":" + numberOfAI3Wins + "\n    " + AI4.getName() + ":" + numberOfAI4Wins);
 
-		db.setGameRecord(gcount);
-		gcount++;
-		if (((Player) winner) == human) {
-			db.sethumanWinRecord(hcount);
-			hcount++;
-		} else {
-			db.setaiWinRecord(aicount);
-			aicount++;
+		db.setGameRecord(1);
+
+		if(((Player) winner) ==human) 
+		{
+			db.sethumanWinRecord(1);
+		}
+		else 
+		{
+		db.setaiWinRecord(1);
 		}
 		db.setaverageDraws(dcount);
-
+		
 		db.setlongestGame(j);
 
 	}
