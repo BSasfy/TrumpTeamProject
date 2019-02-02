@@ -1,0 +1,59 @@
+package commandline;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+/**
+ * Top Trumps command line application
+ */
+public class TopTrumpsCLIApplication {
+
+	/**
+	 * This main method is called by TopTrumps.java when the user specifies that
+	 * they want to run in command line mode. The contents of args[0] is whether we
+	 * should write game logs to a file.
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
+	public static void main(String[] args) throws IOException {
+		boolean writeGameLogsToFile = false; // Should we write game logs to file?
+		// if (args[0].equalsIgnoreCase("true"))
+		// writeGameLogsToFile = true; // Command line selection, uncomment!
+
+		// State
+		boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
+
+		// Loop until the user wants to exit the game
+		while (!userWantsToQuit) {
+			System.out.println(
+					"If you would like to start a new game please press `1` if you would like to see previous records please press `2`");
+			Scanner s = new Scanner(System.in);
+			int choice = s.nextInt();
+			if (choice == 1) {
+				// Set commmandLineMode to true in TopTrumps.java
+				// Copy the following code into the while loop in TopTrumpsCLIApplication.java
+				// where it says "your game logic goes here"
+
+				DeckInAndShuffle d = new DeckInAndShuffle();
+				Player humanPlayer = new Player();
+				Player AI1 = new Player();
+				Player AI2 = new Player();
+				Player AI3 = new Player();
+				Player AI4 = new Player();
+				GamePlay gp = new GamePlay(d, humanPlayer, AI1, AI2, AI3, AI4);
+				// Database db = new Database(gp);
+
+				gp.playgame();
+
+				userWantsToQuit = true; // use this when the user wants to exit the game
+
+			} else if (choice == 2) {
+				Database db = new Database();
+				db.DisplayDataBase();
+			}
+		}
+
+	}
+
+}
