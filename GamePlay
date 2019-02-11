@@ -45,6 +45,7 @@ public class GamePlay {
 	Player AI4;
 
 	int dcount = 0;
+	int roundNumber = 0;
 
 	Object activePlayer;
 	Object winner;
@@ -93,10 +94,11 @@ public class GamePlay {
 
 		while (true) {
 			j++;
+			roundNumber++;
 			System.out.println("Round " + j);
 
 			// play cards
-			winner = null;
+			// winner = null;
 			cardsInGame.clear();
 			numberOfPlayers = 5;
 
@@ -364,4 +366,59 @@ public class GamePlay {
 			AIDeck4.add(shuffledDeck.get(i));
 		}
 	}
+	
+	
+	// Relevant getters 
+	public String activePlayer() {
+		return ((Player) activePlayer).getName();
+	}
+	public int getRoundNumber() {
+		return roundNumber;
+	}
+	
+	public String getWinner() {
+		return ((Player) winner).getName();
+		
+	}
+
+	public List<List> getPlayerDeck() {
+		return playerDeck;
+	}
+
+	public void setPlayerDeck(List<List> playerDeck) {
+		this.playerDeck = playerDeck;
+	}
+
+	public List<List> getAIDeck1() {
+		return AIDeck1;
+	}
+
+	public void setAIDeck1(List<List> AIDeck1) {
+		AIDeck1 = AIDeck1;
+	}
+
+	public List<List> getAIDeck2() {
+		return AIDeck2;
+	}
+
+	public void setAIDeck2(List<List> AIDeck2) {
+		AIDeck2 = AIDeck2;
+	}
+
+	public List<List> getAIDeck4() {
+		return AIDeck4;
+	}
+
+	public void setAIDeck4(List<List> AIDeck4) {
+		AIDeck4 = AIDeck4;
+	}
+
+	public List<List> getAIDeck3() {
+		return AIDeck3;
+	}
+
+	public void setAIDeck3(List<List> AIDeck3) {
+		AIDeck3 = AIDeck3;
+	}
+}
 }
