@@ -1,0 +1,183 @@
+package online.dwResources;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+import online.configuration.TopTrumpsJSONConfiguration;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
+import commandline.DeckInAndShuffle;
+import commandline.GamePlay;
+import commandline.Player;
+
+
+@Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
+@Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
+@Consumes(MediaType.APPLICATION_JSON) // This resource can take JSON content as input
+/**
+ * This is a Dropwizard Resource that specifies what to provide when a user
+ * requests a particular URL. In this case, the URLs are associated to the
+ * different REST API methods that you will need to expose the game commands
+ * to the Web page.
+ * 
+ * Below are provided some sample methods that illustrate how to create
+ * REST API methods in Dropwizard. You will need to replace these with
+ * methods that allow a TopTrumps game to be controled from a Web page.
+ */
+public class TopTrumpsRESTAPI {
+	private GamePlay gp;
+	private DeckInAndShuffle d;
+
+	/** A Jackson Object writer. It allows us to turn Java objects
+	 * into JSON strings easily. */
+	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+	
+	/**
+	 * Contructor method for the REST API. This is called first. It provides
+	 * a TopTrumpsJSONConfiguration from which you can get the location of
+	 * the deck file and the number of AI players.
+	 * @param conf
+	 * @throws IOException 
+	 */
+	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf) throws IOException {
+		// ----------------------------------------------------
+		// Add relevant initalization here
+		// ----------------------------------------------------
+		d = new DeckInAndShuffle();
+		Player humanPlayer = new Player();
+		Player AI1 = new Player();
+		Player AI2 = new Player();
+		Player AI3 = new Player();
+		Player AI4 = new Player();
+		gp = new GamePlay (d, humanPlayer, AI1, AI2, AI3, AI4);
+		
+		
+		
+	}
+	
+	// ----------------------------------------------------
+	// Add relevant API methods here
+	// ----------------------------------------------------
+	
+	
+	
+	
+	@GET
+	@Path("/helloJSONList")
+	/**
+	 * Here is an example of a simple REST get request that returns a String.
+	 * We also illustrate here how we can convert Java objects to JSON strings.
+	 * @return - List of words as JSON
+	 * @throws IOException
+	 */
+	public String helloJSONList() throws IOException {
+		gp.playgame();
+		
+		List<String> listOfWords = new ArrayList<String>();
+		listOfWords.add("Hello");
+		listOfWords.add("World!");
+		
+		// We can turn arbatory Java objects directly into JSON strings using
+		// Jackson seralization, assuming that the Java objects are not too complex.
+		String listAsJSONString = oWriter.writeValueAsString(listOfWords);
+		
+		return listAsJSONString;
+	}
+	
+	@GET
+	@Path("/getRound")
+	public int getRound() throws IOException { 
+		int round = gp.getRoundNumber();
+		return round;
+	}
+	
+	@GET
+	@Path("/getActivePlayer")
+	public Object getActivePlayer() throws IOException {
+		Object activePlayer = gp.activePlayer();
+		return activePlayer;
+	}
+	
+	@GET
+	@Path("/getHumanCard")
+	public String getCard() throws IOException {
+		List playerCard = gp.getPlayerDeck().get(0);
+		String card = oWriter.writeValueAsString(playerCard);
+		return card;
+	}
+	
+	@GET
+	@Path("/getAI1Card")
+	public String getAI1Card() throws IOException {
+		List playerCard = gp.getAIDeck1().get(0);
+		String card = oWriter.writeValueAsString(playerCard);
+		return card;
+	}
+	
+	@GET
+	@Path("/getAI2Card")
+	public String getAI2Card() throws IOException {
+		List playerCard = gp.getAIDeck2().get(0);
+		String card = oWriter.writeValueAsString(playerCard);
+		return card;
+	}
+	
+	@GET
+	@Path("/getAI3Card")
+	public String getAI3Card() throws IOException {
+		List playerCard = gp.getAIDeck3().get(0);
+		String card = oWriter.writeValueAsString(playerCard);
+		return card;
+	}
+	
+	@GET
+	@Path("/getAI4Card")
+	public String getAI4Card() throws IOException {
+		List playerCard = gp.getAIDeck4().get(0);
+		String card = oWriter.writeValueAsString(playerCard);
+		return card;
+	}
+	
+	@GET
+	@Path("/getWinner")
+	public String getWinner() throws IOException {
+		String winner = gp.getWinner();
+		return winner;
+	}
+	
+
+	
+	@GET
+	@Path("/deckString")
+	public String deckString() throws IOException {
+		d.setUpDeck();
+		String deckString = oWriter.writeValueAsString(d);
+		return deckString;
+	}
+	
+	
+	@GET
+	@Path("/helloWord")
+	/**
+	 * Here is an example of how to read parameters provided in an HTML Get request.
+	 * @param Word - A word
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public String helloWord(@QueryParam("Word") String Word) throws IOException {
+		return "Hello "+Word;
+	}
+	
+	
+	
+}
