@@ -1,11 +1,17 @@
 package online.dwResources;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -35,8 +41,9 @@ import commandline.Player;
  * methods that allow a TopTrumps game to be controled from a Web page.
  */
 public class TopTrumpsRESTAPI {
-	private GamePlay gp;
+	public GamePlay gp;
 	private DeckInAndShuffle d;
+	public boolean online = true;
 
 	/** A Jackson Object writer. It allows us to turn Java objects
 	 * into JSON strings easily. */
@@ -111,41 +118,72 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/getHumanCard")
 	public String getCard() throws IOException {
-		List playerCard = gp.getPlayerDeck().get(0);
-		String card = oWriter.writeValueAsString(playerCard);
+		String card = "";
+		List<List> playerDeck = gp.getPlayerDeck();
+		if(playerDeck.isEmpty()) {
+			card = "No cards left.";
+		} else {
+			List playerCard = playerDeck.get(0);
+			card = oWriter.writeValueAsString(playerCard);
+		}
 		return card;
 	}
 	
 	@GET
 	@Path("/getAI1Card")
 	public String getAI1Card() throws IOException {
-		List playerCard = gp.getAIDeck1().get(0);
-		String card = oWriter.writeValueAsString(playerCard);
-		return card;
+		String cardAI1 = "";
+		List<List> AI1Deck = gp.getAIDeck1();
+		if(AI1Deck.isEmpty()) {
+			cardAI1 = "No cards left.";
+		} else {
+			List AI1Card = AI1Deck.get(0);
+			cardAI1 = oWriter.writeValueAsString(AI1Card);
+		} 
+		return cardAI1;
 	}
+	
 	
 	@GET
 	@Path("/getAI2Card")
 	public String getAI2Card() throws IOException {
-		List playerCard = gp.getAIDeck2().get(0);
-		String card = oWriter.writeValueAsString(playerCard);
-		return card;
+		String cardAI2 = "";
+		List<List> AI2Deck = gp.getAIDeck1();
+		if(AI2Deck.isEmpty()) {
+			cardAI2 = "No cards left.";
+		} else {
+			List AI2Card = AI2Deck.get(0);
+			cardAI2 = oWriter.writeValueAsString(AI2Card);
+		} 
+		return cardAI2;
 	}
 	
 	@GET
 	@Path("/getAI3Card")
 	public String getAI3Card() throws IOException {
-		List playerCard = gp.getAIDeck3().get(0);
-		String card = oWriter.writeValueAsString(playerCard);
-		return card;
+		String cardAI3 = "";
+		List<List> AI3Deck = gp.getAIDeck3();
+		if(AI3Deck.isEmpty()) {
+			cardAI3 = "No cards left.";
+		} else {
+			List AI3Card = AI3Deck.get(0);
+			cardAI3 = oWriter.writeValueAsString(AI3Card);
+		} 
+		return cardAI3;
 	}
 	
 	@GET
 	@Path("/getAI4Card")
 	public String getAI4Card() throws IOException {
-		List playerCard = gp.getAIDeck4().get(0);
-		String card = oWriter.writeValueAsString(playerCard);
-		return card;
+		String cardAI4 = "";
+		List<List> AI4Deck = gp.getAIDeck4();
+		if(AI4Deck.isEmpty()) {
+			cardAI4 = "No cards left.";
+		} else {
+			List AI4Card = AI4Deck.get(0);
+			cardAI4 = oWriter.writeValueAsString(AI4Card);
+		} 
+		return cardAI4;
 	}
 	
 	@GET
@@ -181,3 +219,4 @@ public class TopTrumpsRESTAPI {
 	
 	
 }
+
