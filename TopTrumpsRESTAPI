@@ -22,6 +22,7 @@ import online.configuration.TopTrumpsJSONConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import commandline.Database;
 import commandline.DeckInAndShuffle;
 import commandline.GamePlay;
 import commandline.Player;
@@ -42,6 +43,7 @@ import commandline.Player;
  */
 public class TopTrumpsRESTAPI {
 	public GamePlay gp;
+	public Database db;
 	private DeckInAndShuffle d;
 	public boolean online = true;
 
@@ -67,7 +69,7 @@ public class TopTrumpsRESTAPI {
 		Player AI3 = new Player();
 		Player AI4 = new Player();
 		gp = new GamePlay (d, humanPlayer, AI1, AI2, AI3, AI4);
-		
+		db = new Database();
 		
 		
 	}
@@ -216,7 +218,48 @@ public class TopTrumpsRESTAPI {
 		return "Hello "+Word;
 	}
 	
+	@GET
+	@Path("/GetNumberOfGames")
+	public String GetNumberOfGames()throws IOException
+	{
+		db.DisplayDataBase();
+		String values=db.GetNumberOfGames();
+		return values;
+	}
 	
+	@GET
+	@Path("/GetHumanWins")
+	public String GetHumanWins()throws IOException
+	{
+		db.DisplayDataBase();
+		String values=db.GetHumanWins();
+		return values;
+	}
 	
+	@GET
+	@Path("/GetAIWins")
+	public String GetAIWins()throws IOException
+	{
+		db.DisplayDataBase();
+		String values=db.GetAIWins();
+		return values;
+	}
+	
+	@GET
+	@Path("/GetAverageNumberOfDraws")
+	public String GetAverageNumberOfDraws()throws IOException
+	{
+		db.DisplayDataBase();
+		String values=db.GetAverageNumberOfDraws();
+		return values;
+	}
+	
+	@GET
+	@Path("/GetLongestGame")
+	public String GetLongestGame()throws IOException
+	{
+		db.DisplayDataBase();
+		String values=db.GetLongestGame();
+		return values;
+	}
 }
-
