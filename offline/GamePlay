@@ -16,16 +16,13 @@ import java.util.Random;
 // DONE find a way to draw that arrow pointing to the winning category in the winner card like in the example document on moodle. 
 // DONE IMPORTANT what happens if its a draw?
 // DONE Exception Handling needed for Player Class humanChooseAttribute(), if they enter numbers other than 1 or 5, if they enter something other than an int, etc.
-/* IMPORTANT implement: Do you want to see past results or play a game?
+/* DONE: Do you want to see past results or play a game?
 			*1: Print Game Statistics
 			*2: Play game*/
-// IMPORTANT Implement game statistics - database
-/*Gold Plating: change some of the card values so there are no exactly
-// identical ones? Maybe come up with new card names for the ones that are repeated? At least some of them?
- records need to be a string*/
-//	create more methods to structure the code better. 
-// double check class, method, array and attribute names based on Java Naming Convention. 
-// find a way to diplay it only once when a player is out of the game, not every round. 
+// DONE: Implement game statistics - database 
+// DONE: double check class, method, array and attribute names based on Java Naming Convention. 
+// WHAT: find a way to display it only once when a player is out of the game, not every round. 
+//NOT DONE: create more methods to structure the code better.
 
 public class GamePlay {
 
@@ -44,8 +41,10 @@ public class GamePlay {
 	Player AI3;
 	Player AI4;
 
+	int aicount = 0;
+	int hcount = 0;
+	int gcount = 0;
 	int dcount = 0;
-	int roundNumber = 0;
 
 	Object activePlayer;
 	Object winner;
@@ -77,6 +76,7 @@ public class GamePlay {
 	}
 
 	void playgame() throws IOException {
+
 		int chosenAttribute = 0;
 
 		cardsIn.setUpDeck();
@@ -94,11 +94,10 @@ public class GamePlay {
 
 		while (true) {
 			j++;
-			roundNumber++;
 			System.out.println("Round " + j);
 
 			// play cards
-			// winner = null;
+			winner = null;
 			cardsInGame.clear();
 			numberOfPlayers = 5;
 
@@ -159,7 +158,7 @@ public class GamePlay {
 			List<List> winnerCard = null;
 			int max = 0;
 			try {
-				for (int i = 0; i < cardsInGame.size(); i++) { // is looping uncontrollably?
+				for (int i = 0; i < cardsInGame.size(); i++) {
 
 					if (((int) cardsInGame.get(i).get(chosenAttribute)) > max) {
 						max = (int) cardsInGame.get(i).get(chosenAttribute);
@@ -284,7 +283,9 @@ public class GamePlay {
 				if (numberOfPlayers == 1) {
 					break;
 				}
-				// Thread.sleep(2000); optional
+
+				// sleep is optional to slow down the game and make it more followable.
+				// Thread.sleep(2000);
 
 			} catch (Exception e) {
 
@@ -311,18 +312,17 @@ public class GamePlay {
 				+ ":" + numberOfAI1Wins + "\n    " + AI2.getName() + ":" + numberOfAI2Wins + "\n    " + AI3.getName()
 				+ ":" + numberOfAI3Wins + "\n    " + AI4.getName() + ":" + numberOfAI4Wins);
 
-		db.setGameRecord(1);
-
-		if(((Player) winner) ==human) 
-		{
-			db.sethumanWinRecord(1);
-		}
-		else 
-		{
-		db.setaiWinRecord(1);
+		db.setGameRecord(gcount);
+		gcount++;
+		if (((Player) winner) == human) {
+			db.sethumanWinRecord(hcount);
+			hcount++;
+		} else {
+			db.setaiWinRecord(aicount);
+			aicount++;
 		}
 		db.setaverageDraws(dcount);
-		
+
 		db.setlongestGame(j);
 
 	}
@@ -366,59 +366,4 @@ public class GamePlay {
 			AIDeck4.add(shuffledDeck.get(i));
 		}
 	}
-	
-	
-	// Relevant getters 
-	public String activePlayer() {
-		return ((Player) activePlayer).getName();
-	}
-	public int getRoundNumber() {
-		return roundNumber;
-	}
-	
-	public String getWinner() {
-		return ((Player) winner).getName();
-		
-	}
-
-	public List<List> getPlayerDeck() {
-		return playerDeck;
-	}
-
-	public void setPlayerDeck(List<List> playerDeck) {
-		this.playerDeck = playerDeck;
-	}
-
-	public List<List> getAIDeck1() {
-		return AIDeck1;
-	}
-
-	public void setAIDeck1(List<List> AIDeck1) {
-		AIDeck1 = AIDeck1;
-	}
-
-	public List<List> getAIDeck2() {
-		return AIDeck2;
-	}
-
-	public void setAIDeck2(List<List> AIDeck2) {
-		AIDeck2 = AIDeck2;
-	}
-
-	public List<List> getAIDeck4() {
-		return AIDeck4;
-	}
-
-	public void setAIDeck4(List<List> AIDeck4) {
-		AIDeck4 = AIDeck4;
-	}
-
-	public List<List> getAIDeck3() {
-		return AIDeck3;
-	}
-
-	public void setAIDeck3(List<List> AIDeck3) {
-		AIDeck3 = AIDeck3;
-	}
-}
 }
