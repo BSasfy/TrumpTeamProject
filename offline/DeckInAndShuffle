@@ -1,7 +1,9 @@
 package commandline;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,20 +12,25 @@ import java.util.List;
 public class DeckInAndShuffle {
 
 	String[] lineStrArr = new String[5];
-	ArrayList<List> startDeck = new ArrayList<>(); //changed it from List<List> to ArrayList<List> so it works with Dealing. 
+	ArrayList<List> startDeck = new ArrayList<>(); // changed it from List<List> to ArrayList<List> so it works with
+													// Dealing.
 	List<String> LineStrArr = new ArrayList<>();
-	IndividualCards cards; 
+	IndividualCards cards;
 	List card;
 	String[] fieldNames;
 
+	static FileWriter fw;
+	static BufferedWriter bf;
+
 	public void setUpDeck() throws IOException {
+		fw = new FileWriter("Log.txt");
 		String line;
 
 		BufferedReader br = new BufferedReader(new FileReader("StarCitizenDeck.txt"));
 		fieldNames = br.readLine().split("\\s");
 		// data structure for inserting the values
-		while ((line=br.readLine()) != null) {
-			
+		while ((line = br.readLine()) != null) {
+
 			startDeck.add(separateDeck(line));
 		}
 
@@ -60,9 +67,39 @@ public class DeckInAndShuffle {
 
 		return startDeck;
 	}
-	
+
 	public String[] getFieldNames() {
 		return fieldNames;
 	}
 
+	// method writes given text to file
+	public void setLog(String text) {
+		TopTrumpsCLIApplication tt = new TopTrumpsCLIApplication();
+		if (tt.getLogStatus() == true) {
+			try {
+				fw = new FileWriter("Log.txt", true);
+				bf = new BufferedWriter(fw);
+				bf.write(text);
+				bf.newLine();
+				bf.flush();
+				bf.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// method adds an extra line to the log document
+	public static void addLineLog() {
+		try {
+			fw = new FileWriter("Log.txt", true);
+			bf = new BufferedWriter(fw);
+			bf.newLine();
+			bf.newLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
