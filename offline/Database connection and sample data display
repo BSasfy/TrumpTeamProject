@@ -1,3 +1,4 @@
+package commandline;
 //package commandline;
 
 import java.sql.*;
@@ -10,6 +11,7 @@ public class Database {
 	int aiWinRecord1=0;
 	int averageDraws1=0;
 	int longestGame1=0;
+	String nog="",nhw="",naw="",anod="",lg="";
 	public Database() {
 		// TODO Auto-generated constructor stub
 	}
@@ -104,11 +106,13 @@ public class Database {
 					while (result.next())
 					{
 						System.out.println("Game Statistics:");
-						System.out.println(" Number of Games: " + result.getInt("numberofgames")
-								+ "\n Number of Human Wins: " + result.getInt("numberhumanwins")
-								+ "\n Number of AI Wins: " + result.getInt("numberaiwins")
-								+ "\n Average number of Draws: " + result.getInt("averagenumberdraws")
-								+ "\n Longest Game: " + result.getInt("longestgame"));
+						//System.out.println("Number oif games:"+result.getInt("numberofgames"));
+						nog=" Number of Games: " + result.getInt("numberofgames");
+						nhw= "\n Number of Human Wins: " + result.getInt("numberhumanwins");
+						naw= "\n Number of AI Wins: " + result.getInt("numberaiwins");
+						anod= "\n Average number of Draws: " + result.getInt("averagenumberdraws");
+						lg= "\n Longest Game: " + result.getInt("longestgame");
+						System.out.println(nog+nhw+naw+anod+lg);
 						System.out.println();
 					}
 					statement.close();
@@ -140,5 +144,33 @@ public class Database {
 	}
 	void setlongestGame(int lg) {
 		longestGame1 = lg;
+	}
+	
+	public String GetNumberOfGames()
+	{
+		
+		return nog;
+	}
+	public String GetHumanWins()
+	{
+		
+		return nhw;
+	}
+	
+	public String GetAIWins()
+	{
+		
+		return naw;
+	}
+	public String GetAverageNumberOfDraws()
+	{
+		
+		return anod;
+	}
+	
+	public String GetLongestGame()
+	{
+		
+		return lg;
 	}
 }
