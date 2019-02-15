@@ -60,6 +60,8 @@ public class GamePlay {
 	int numberOfAI3Wins = 0;
 	int numberOfAI4Wins = 0;
 
+	DeckInAndShuffle dias = new DeckInAndShuffle();
+
 	public GamePlay(DeckInAndShuffle d, Player humanPlayer, Player aI1, Player aI2, Player aI3, Player aI4) {
 		cardsIn = d;
 		human = humanPlayer;
@@ -85,6 +87,7 @@ public class GamePlay {
 		dealDeck();
 		activePlayer = getActivePlayer();
 		List<List> cardsInGame = new ArrayList<List>();
+		List drawPile = new ArrayList<>();
 
 		int numberOfPlayers;
 		// human.setIsStillInGame(false);
@@ -96,7 +99,7 @@ public class GamePlay {
 		while (true) {
 			j++;
 			roundNumber++;
-			System.out.println("Round " + j);
+			dias.addLineLog();
 
 			// play cards
 			winner = null;
@@ -105,19 +108,27 @@ public class GamePlay {
 
 			if (human.isStillInGame) {
 				cardsInGame.add(playerDeck.get(0));
+				dias.setLog("Human`s card, round " + roundNumber + ": " + playerDeck.get(0).toString());
 			}
 			if (AI1.isStillInGame) {
 				cardsInGame.add(AIDeck1.get(0));
+				dias.setLog("AI1`s card, round " + roundNumber + ": " + AIDeck1.get(0).toString());
 			}
 			if (AI2.isStillInGame) {
 				cardsInGame.add(AIDeck2.get(0));
+				dias.setLog("AI2`s card, round " + roundNumber + ": " + AIDeck2.get(0).toString());
 			}
 			if (AI3.isStillInGame) {
 				cardsInGame.add(AIDeck3.get(0));
+				dias.setLog("AI3`s card, round " + roundNumber + ": " + AIDeck3.get(0).toString());
 			}
 			if (AI4.isStillInGame) {
 				cardsInGame.add(AIDeck4.get(0));
+				dias.setLog("AI4`s card, round " + getRoundNumber() + ": " + AIDeck4.get(0).toString());
 			}
+			dias.addLineLog();
+			dias.setLog("The communal pile in round " + roundNumber + ": " + cardsInGame.toString());
+			dias.addLineLog();
 
 			System.out.println("Round " + j + ": Players have drawn their cards.");
 			if (human.isStillInGame) {
@@ -154,14 +165,41 @@ public class GamePlay {
 				chosenAttribute = ((Player) activePlayer).AIChooseAttribute();
 			}
 
+			dias.setLog("The chosen attribute is " + attributeNames[chosenAttribute]);
+
+			if (human.isStillInGame) {
+				dias.setLog(" Human: " + playerDeck.get(0).get(chosenAttribute));
+			}
+			;
+
+			if (AI1.isStillInGame) {
+				dias.setLog(" AI1: " + AIDeck1.get(0).get(chosenAttribute));
+			}
+			;
+
+			if (AI2.isStillInGame) {
+				dias.setLog(" AI2: " + AIDeck2.get(0).get(chosenAttribute));
+			}
+			;
+
+			if (AI3.isStillInGame) {
+				dias.setLog(" AI3: " + AIDeck3.get(0).get(chosenAttribute));
+			}
+			;
+
+			if (AI4.isStillInGame) {
+				dias.setLog(" AI4: " + AIDeck4.get(0).get(chosenAttribute));
+			}
+			;
+
 			System.out.println("The attribute you chose is: " + chosenAttribute);
 
 			// compare cards
 			List<List> winnerCard = null;
 			int max = 0;
+			int drawValue = 0;
 			try {
 				for (int i = 0; i < cardsInGame.size(); i++) {
-
 					if (((int) cardsInGame.get(i).get(chosenAttribute)) > max) {
 						max = (int) cardsInGame.get(i).get(chosenAttribute);
 						winnerCard = cardsInGame.get(i);
@@ -169,14 +207,50 @@ public class GamePlay {
 
 					if (((int) cardsInGame.get(i).get(chosenAttribute)) == max) {
 						max = (int) cardsInGame.get(i).get(chosenAttribute);
+						drawValue = (int) cardsInGame.get(i).get(chosenAttribute);
 						winnerCard = cardsInGame.get(i);
+					}
+					if (i - 1 == cardsInGame.size() && max == drawValue) {
 						dcount++;
+						for (int p = 0; p < cardsInGame.size(); p++) {
+							drawPile.add(cardsInGame.get(p));
+						}
+
+						if (human.isStillInGame == true) {
+							playerDeck.remove(playerDeck.get(0));
+							dias.setLog("Human`s deck: " + playerDeck.toString());
+						}
+
+						if (AI1.isStillInGame == true) {
+							AIDeck1.remove(AIDeck1.get(0));
+							dias.setLog("AI1`s deck: " + AIDeck1.toString());
+						}
+
+						if (AI2.isStillInGame == true) {
+							AIDeck2.remove(AIDeck2.get(0));
+							dias.setLog("AI2`s deck: " + AIDeck2.toString());
+						}
+
+						if (AI3.isStillInGame == true) {
+							AIDeck3.remove(AIDeck3.get(0));
+							dias.setLog("AI3`s deck: " + AIDeck3.toString());
+						}
+
+						if (AI4.isStillInGame == true) {
+							AIDeck4.remove(AIDeck4.get(0));
+							dias.setLog("AI4`s deck" + AIDeck4.toString());
+						}
+
+						cardsInGame.clear();
+						continue;
 					}
 				}
+
 				if (human.isStillInGame && winnerCard == playerDeck.get(0)) {
 					winner = human;
 					winnersDeck = playerDeck;
 					numberOfHumanWins++;
+
 				} else if (AI1.isStillInGame && winnerCard == AIDeck1.get(0)) {
 					winner = AI1;
 					winnersDeck = AIDeck1;
@@ -225,24 +299,31 @@ public class GamePlay {
 					System.out.println("    >" + attributeNames[5] + ": " + winnerCard.get(5));
 				}
 
+				dias.addLineLog();
+
 				if (human.isStillInGame == true) {
 					playerDeck.remove(playerDeck.get(0));
+					dias.setLog("Human`s deck: " + playerDeck.toString());
 				}
 
 				if (AI1.isStillInGame == true) {
 					AIDeck1.remove(AIDeck1.get(0));
+					dias.setLog("AI1`s deck: " + AIDeck1.toString());
 				}
 
 				if (AI2.isStillInGame == true) {
 					AIDeck2.remove(AIDeck2.get(0));
+					dias.setLog("AI2`s deck: " + AIDeck2.toString());
 				}
 
 				if (AI3.isStillInGame == true) {
 					AIDeck3.remove(AIDeck3.get(0));
+					dias.setLog("AI3`s deck: " + AIDeck3.toString());
 				}
 
 				if (AI4.isStillInGame == true) {
 					AIDeck4.remove(AIDeck4.get(0));
+					dias.setLog("AI4`s deck" + AIDeck4.toString());
 				}
 
 				Collections.shuffle(cardsInGame);
@@ -250,7 +331,13 @@ public class GamePlay {
 				for (int i = 0; i < cardsInGame.size(); i++) {
 					winnersDeck.add(cardsInGame.get(i));
 				}
-
+				if (drawPile.isEmpty() == false) {
+					Collections.shuffle(drawPile);
+					for (int i = 0; i < drawPile.size(); i++) {
+						winnersDeck.addAll(drawPile);
+					}
+					drawPile.clear();
+				}
 				// passing activePlayer status
 				activePlayer = winner;
 
@@ -309,11 +396,13 @@ public class GamePlay {
 		}
 
 		System.out.println("Game End.");
+		System.out.println("The number of draws are: " + dcount);
 		System.out.println("The overall winner is: " + ((Player) winner).getName() + ". Congratulations!");
 		System.out.println("Scores: " + "\n    " + human.getName() + ":" + numberOfHumanWins + "\n    " + AI1.getName()
 				+ ":" + numberOfAI1Wins + "\n    " + AI2.getName() + ":" + numberOfAI2Wins + "\n    " + AI3.getName()
 				+ ":" + numberOfAI3Wins + "\n    " + AI4.getName() + ":" + numberOfAI4Wins);
-
+		dias.addLineLog();
+		dias.setLog("The overall winner is: " + ((Player) winner).getName() + "!");
 		db.setGameRecord(gcount);
 		gcount++;
 		if (((Player) winner) == human) {
