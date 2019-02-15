@@ -404,18 +404,22 @@ public class GamePlay {
 				+ ":" + numberOfAI3Wins + "\n    " + AI4.getName() + ":" + numberOfAI4Wins);
 		dias.addLineLog();
 		dias.setLog("The overall winner is: " + ((Player) winner).getName() + "!");
-		db.setGameRecord(gcount);
-		gcount++;
-		if (((Player) winner) == human) {
-			db.sethumanWinRecord(hcount);
-			hcount++;
-		} else {
-			db.setaiWinRecord(aicount);
-			aicount++;
+	
+		db.setGameRecord(1);
+		
+		
+		if (((Player) winner) == human)
+		{
+			db.sethumanWinRecord(1);	
+		}
+		else 
+		{
+			db.setaiWinRecord(1);
 		}
 		db.setaverageDraws(dcount);
-
+	
 		db.setlongestGame(j);
+		
 
 	}
 
