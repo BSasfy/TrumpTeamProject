@@ -46,6 +46,8 @@ public class TopTrumpsCLIApplication {
 				// Database db = new Database(gp);
 
 				gp.playgame();
+				Database db=new Database();
+				db.LoadDatabase();		
 
 			} else if (choice == 2) {
 				Database db = new Database();
