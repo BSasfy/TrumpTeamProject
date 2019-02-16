@@ -26,6 +26,9 @@ import java.util.Random;
 
 public class GamePlay {
 
+	boolean isGameOffline = false;
+	int numberOfPlayers = 0;
+
 	List<List> shuffledDeck = new ArrayList<List>();
 	List<List> playerDeck = new ArrayList<List>();
 	List<List> AIDeck1 = new ArrayList<List>();
@@ -79,6 +82,14 @@ public class GamePlay {
 	}
 
 	void playgame() throws IOException {
+	
+		if (isGameOffline) {
+			System.out.println("Game is being played offline.");
+		} else {
+			System.out.println("Game is being played online."); // not accounting for if its false
+		} // delete entire if block when done
+
+		getNumberOfPlayers();
 
 		int chosenAttribute = 0;
 
@@ -89,7 +100,7 @@ public class GamePlay {
 		List<List> cardsInGame = new ArrayList<List>();
 		List drawPile = new ArrayList<>();
 
-		int numberOfPlayers;
+		
 		// human.setIsStillInGame(false);
 		System.out.println("Game Start");
 		int j = 0;
@@ -426,7 +437,7 @@ public class GamePlay {
 	Object getActivePlayer() {
 		Random rand = new Random();
 
-		int activePlayer = rand.nextInt(4);
+		int activePlayer = rand.nextInt(numberOfPlayers - 1);
 
 		if (activePlayer == 0) {
 			return human;
@@ -441,27 +452,92 @@ public class GamePlay {
 		}
 	}
 
-	private void dealDeck() {
-		for (int i = 0; i < 8; i++) {
-			playerDeck.add(shuffledDeck.get(i));
+	private void dealDeck() throws IOException {
+		if (numberOfPlayers == 5) {
+			for (int i = 0; i < 8; i++) {
+				playerDeck.add(shuffledDeck.get(i));
+			}
+
+			for (int i = 8; i < 16; i++) {
+				AIDeck1.add(shuffledDeck.get(i));
+			}
+
+			for (int i = 16; i < 24; i++) {
+				AIDeck2.add(shuffledDeck.get(i));
+			}
+
+			for (int i = 24; i < 32; i++) {
+				AIDeck3.add(shuffledDeck.get(i));
+			}
+
+			for (int i = 32; i < 40; i++) {
+				AIDeck4.add(shuffledDeck.get(i));
+			}
+		} else if (numberOfPlayers == 4) {
+			for (int i = 0; i < 10; i++) {
+				playerDeck.add(shuffledDeck.get(i));
+			}
+
+			for (int i = 10; i < 20; i++) {
+				AIDeck1.add(shuffledDeck.get(i));
+			}
+
+			for (int i = 20; i < 30; i++) {
+				AIDeck2.add(shuffledDeck.get(i));
+			}
+
+			for (int i = 30; i < 40; i++) {
+				AIDeck3.add(shuffledDeck.get(i));
+			}
+			AI4.setIsStillInGame(false);
+		} else if (numberOfPlayers == 3) {
+			for (int i = 0; i < 13; i++) {
+				playerDeck.add(shuffledDeck.get(i));
+			}
+
+			for (int i = 13; i < 26; i++) {
+				AIDeck1.add(shuffledDeck.get(i));
+			}
+
+			for (int i = 26; i < 40; i++) {
+				AIDeck2.add(shuffledDeck.get(i));
+			}
+			AI3.setIsStillInGame(false);
+			AI4.setIsStillInGame(false);
+		} else if (numberOfPlayers == 2) {
+			for (int i = 0; i < 20; i++) {
+				playerDeck.add(shuffledDeck.get(i));
+			}
+
+			for (int i = 20; i < 40; i++) {
+				AIDeck1.add(shuffledDeck.get(i));
+			}
+
+			AI2.setIsStillInGame(false);
+			AI3.setIsStillInGame(false);
+			AI4.setIsStillInGame(false);
 		}
 
-		for (int i = 8; i < 16; i++) {
-			AIDeck1.add(shuffledDeck.get(i));
-		}
-
-		for (int i = 16; i < 24; i++) {
-			AIDeck2.add(shuffledDeck.get(i));
-		}
-
-		for (int i = 24; i < 32; i++) {
-			AIDeck3.add(shuffledDeck.get(i));
-		}
-
-		for (int i = 32; i < 40; i++) {
-			AIDeck4.add(shuffledDeck.get(i));
-		}
 	}
+	
+	public void setIsGameOffline(boolean isOffline) {
+		this.isGameOffline = isOffline;
+	}
+
+	private int getNumberOfPlayers() {
+		if (isGameOffline) {
+			numberOfPlayers = 5;
+		} else {
+			Scanner s = new Scanner(System.in);
+			System.out.println(
+					"Please enter how many opponents you wish to have. The maximum number of opponents you can have is 4.");
+			numberOfPlayers = s.nextInt() + 1;
+		}
+
+		System.out.println("You will have " + (numberOfPlayers - 1) + " opponents.");
+		return numberOfPlayers;
+	}
+
 
 	// Relevant getters
 	public String activePlayer() {
