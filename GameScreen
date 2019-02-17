@@ -450,7 +450,7 @@ body { position: absolute; }
 					var humanCard = xhr.response; // the text of the response
  					document.getElementById("humanCard").innerHTML = humanCard;
  					if(humanCard === "No cards left.") {
- 						alert("Game Over. You lost.");
+ 						alert("You lost.");
  					}
 					// alert(humanCard); // lets produce an alert
 				}
