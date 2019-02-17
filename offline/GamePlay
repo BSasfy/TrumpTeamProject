@@ -28,6 +28,8 @@ public class GamePlay {
 
 	boolean isGameOffline = false;
 	int numberOfPlayers = 0;
+	List<List> winnerCard = null;
+	int chosenAttribute = 0;
 
 	List<List> shuffledDeck = new ArrayList<List>();
 	List<List> playerDeck = new ArrayList<List>();
@@ -49,6 +51,7 @@ public class GamePlay {
 	int gcount = 0;
 	int dcount = 0;
 	int roundNumber = 0;
+	int advanceToNextRound = 0;
 
 	Object activePlayer;
 	Object winner;
@@ -90,8 +93,6 @@ public class GamePlay {
 		} // delete entire if block when done
 
 		getNumberOfPlayers();
-
-		int chosenAttribute = 0;
 
 		cardsIn.setUpDeck();
 		shuffledDeck = cardsIn.getStartDeck();
@@ -404,6 +405,19 @@ public class GamePlay {
 					e1.printStackTrace();
 				}
 			}
+			
+			advanceToNextRound = 0; // Relevant for the online version
+			int count = 0;
+			if(isGameOffline != true) { // Only do the following if this is played online
+				while(advanceToNextRound == 0) { // loop until a button is pressed on the website
+					count++;
+					if(count == 100000) { // Something needs to be printed, otherwise the loop does not work properly
+						System.out.println(count);
+					}
+				}
+				
+			}
+			
 			continue;
 		}
 
@@ -541,7 +555,11 @@ public class GamePlay {
 
 	// Relevant getters
 	public String activePlayer() {
-		return ((Player) activePlayer).getName();
+		String activePlayerName = "No active player";
+		if(activePlayer != null) {
+			activePlayerName = ((Player) activePlayer).getName();
+		}
+		return activePlayerName;
 	}
 
 	public int getRoundNumber() {
@@ -591,5 +609,25 @@ public class GamePlay {
 
 	public void setAIDeck3(List<List> AIDeck3) {
 		AIDeck3 = AIDeck3;
+	}
+	
+	public int getNumberPlayersStillInGame() {
+		return numberOfPlayers;
+	}
+	
+	public void setNumberOfPlayers(int number) {
+		this.numberOfPlayers = number;
+	}
+	
+	public void setAdvanceToNextRound(int number) {
+		this.advanceToNextRound = number;
+	}
+	
+	public List<List> getWinnerCard() {
+		return winnerCard;
+	}
+
+	public int getChosenAttribute() {
+		return chosenAttribute;
 	}
 }
