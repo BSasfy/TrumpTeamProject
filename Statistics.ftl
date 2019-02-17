@@ -280,7 +280,7 @@
 }
 
 </style>
-
+<button style="position: fixed; left: 50; top: 480; width:15rem;" onclick="window.location.href='http://localhost:7777/toptrumps/'">Back to Selection Screen</button>
 <div class="Results">
 	DatabaseResults <span id="Results"></span>
 </div>
