@@ -1,5 +1,7 @@
 <html>
 
+html { overflow-y: scroll; }
+body { position: absolute; }
 	<head>
 		<!-- Web page title -->
     	<title>Top Trumps</title>
@@ -8,7 +10,6 @@
     	<script src="https://code.jquery.com/jquery-2.1.1.js"></script>
     	<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
     	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/flick/jquery-ui.css">
-
 		<!-- Optional Styling of the Website, for the demo I used Bootstrap (see https://getbootstrap.com/docs/4.0/getting-started/introduction/) -->
 		<link rel="stylesheet" href="http://dcs.gla.ac.uk/~richardm/TREC_IS/bootstrap.min.css">
     	<script src="http://dcs.gla.ac.uk/~richardm/vex.combined.min.js"></script>
@@ -17,7 +18,9 @@
     	<link rel="stylesheet" href="http://dcs.gla.ac.uk/~richardm/assets/stylesheets/vex-theme-os.css"/>
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  		
+  
 	</head>
 	
 	<body style="background-color:lightgrey;">
@@ -27,41 +30,282 @@
     	
     	<div class="container">
 
-			<!-- Add your HTML Here -->
+			<!----------------------------------------------------------------->
+			<!------------------- HTML & CSS Code ----------------------------->
+			<!----------------------------------------------------------------->
 		
-		</div>
+		
+<!-- Heading and round number --> 
+
+		<style>
+.heading {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background-color: SlateGray;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div class="heading">
+  <p>Top Trumps Game</p>
+</div>
+
+<style>
+.roundCaption {
+  position: fixed;
+  left: 0;
+  top: 30;
+  width: 100%;
+  background-color: Silver;
+  color: black;
+  text-align: center;
+}
+</style>
+
+<div class="roundCaption">
+  Round <span id="roundNum"></span>
+</div>
+
+<!-- Player cards --> 
+
+<style>
+.playerCard {
+  position: fixed;
+  left: 350;
+  top: 150;
+  width: 20%;
+  background-color: RoyalBlue;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div class="playerCard">
+  HumanCard: <span id="humanCard"></span><br />
+  Cards left: <span id="cardsInPlayerDeck"></span>
+</div>
+
+<style>
+.AI1Card {
+  position: fixed;
+  left: 750;
+  top: 150;
+  width: 20%;
+  background-color: Purple;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div id="AI1Box" class="AI1Card">
+  AI1Card: <span id="AI1Card"></span><br />
+  Cards left: <span id="cardsInAI1Deck"></span>
+</div>
+
+
+
+<style>
+.AI2Card {
+  position: fixed;
+  left: 750;
+  top: 210;
+  width: 20%;
+  background-color: Purple;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div id="AI2Box" class="AI2Card">
+  AI2Card: <span id="AI2Card"></span><br />
+  Cards left: <span id="cardsInAI2Deck"></span>
+</div>
+
+<style>
+.AI3Card {
+  position: fixed;
+  left: 1150;
+  top: 150;
+  width: 20%;
+  background-color: Purple;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div id="AI3Box" class="AI3Card">
+  AI3Card: <span id="AI3Card"></span><br />
+  Cards left: <span id="cardsInAI3Deck"></span>
+</div>
+
+<style>
+.AI4Card {
+  position: fixed;
+  left: 1150;
+  top: 210;
+  width: 20%;
+  background-color: Purple;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div id="AI4Box" class="AI4Card">
+  AI4Card: <span id="AI4Card"></span><br />
+  Cards left: <span id="cardsInAI4Deck"></span>
+</div>
+
+
+
+<!-- Boxes on the left --> 
+
+<style>
+.currentActivePlayer {
+  position: fixed;
+  left: 50;
+  top: 150;
+  width: 15%;
+  background-color: MidnightBlue;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div class="currentActivePlayer">
+  Active Player: <span id="actPlayer"></span>
+</div>
+
+<style>
+.winner {
+  position: fixed;
+  left: 50;
+  top: 180;
+  width: 15%;
+  background-color: MidnightBlue;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div class="winner" >
+	Winner: <span id="winner"></span>
+</div>
+
+
+<style>
+.numberPlayers {
+  position: fixed;
+  left: 50;
+  top: 210;
+  width: 15%;
+  background-color: MidnightBlue;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div class="numberPlayers">
+  Number of Players: <span id="numberPlayers"></span>
+</div>
+
+<style>
+.attributeChosen {
+  position: fixed;
+  left: 50;
+  top: 240;
+  width: 15%;
+  background-color: MidnightBlue;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div class="attributeChosen">
+  Attribute chosen: <span id="categoryChosen"></span>
+</div>
+
+<style>
+.description {
+  position: fixed;
+  left: 50;
+  top: 530;
+  width: 35%;
+  background-color: Silver;
+  color: black;
+  text-align: center;
+}
+</style>
+
+<div class="description">
+  Instructions:
+  First, select the number of AI opponents (red buttons), then click "Update". 
+  If it's your turn, as shown by the box on the left (active Player), select a category (blue buttons). 
+  If you are ready to go to the next round, click the green button. 
+  Have fun!
+</div>
+
+
+<!-- Update and back to selection screen buttons -->
+
+<button style="position: fixed; left: 50; top: 430; width:15rem;" onclick="refresh()">Update</button>
+
+<button style="position: fixed; left: 50; top: 480; width:15rem;" onclick="window.location.href='http://localhost:7777/toptrumps/'">Back to Selection Screen</button>
+
+
+<!-- Category selection buttons -->
+
+<div>
+	<b-button-toolbar style="position: fixed; left: 50; top: 360; width:80rem"; key-nav aria-label="Toolbar with button groups">
+		<button type="button" id="catButton1" class="btn btn-primary" value="1" onclick="userInput1()">1: Size      </button>
+		<button type="button" id="catButton2" class="btn btn-primary" value="2" onclick="userInput2()">2: Speed     </button>
+		<button type="button" id="catButton3" class="btn btn-primary" value="3" onclick="userInput3()">3: Range     </button>
+		<button type="button" id="catButton4" class="btn btn-primary" value="4" onclick="userInput4()">4: Firepower </button>
+		<button type="button" id="catButton5" class="btn btn-primary" value="5" onclick="userInput5()">5: Cargo     </button>
+	</b-button-toolbar>
+</div>
+
+<!-- AI Opponent selection buttons -->
+
+<div>
+	<b-button-toolbar style="position: fixed; left: 600; top: 360; width:80rem"; key-nav aria-label="Toolbar with button groups">
+		<button type="button" id="AI1Button" class="btn btn-danger" value="1" onclick="numberOfPlayers1()">1 AI</button>
+		<button type="button" id="AI2Button" class="btn btn-danger" value="2" onclick="numberOfPlayers2()">2 AI</button>
+		<button type="button" id="AI3Button" class="btn btn-danger" value="3" onclick="numberOfPlayers3()">3 AI</button>
+		<button type="button" id="AI4Button" class="btn btn-danger" value="4" onclick="numberOfPlayers4()">4 AI</button>
+	</b-button-toolbar>
+</div>
+
+<!-- Next round button -->
+
+<button type="button" style="position: fixed; left: 900; top: 360; width:10rem"; class="btn btn-success" value="1" onclick="advanceToNextRound()">Next Round</button>
+
+</div>	
+
+
 		
 		<script type="text/javascript">
 		
 			// Method that is called on page load
 			function initalize() {
 			
-				// --------------------------------------------------------------------------
-				// You can call other methods you want to run when the page first loads here
-				// --------------------------------------------------------------------------
+			// --------------------------------------------------------------------------
+			// Call relevant methods when page loads
+			// --------------------------------------------------------------------------
 				
-				// For example, lets call our sample methods
-				helloJSONList();
-				helloWord("Student");
+				setUp();
 				deckString();
 				getRound();
-				getHumanCard();
-				getActivePlayer();
-				getHumanCard2();
-				getWinner();
-				getAI1Card();
-				getAI2Card();
-				getAI3Card();
-				getAI4Card();
-				
 				
 			}
 			
 			// -----------------------------------------
-			// Add your other Javascript methods Here
+			// Other JavaScript methods
 			// -----------------------------------------
 		
-			// This is a reusable method for creating a CORS request. Do not edit this.
+			// This is a reusable method for creating a CORS request. .
 			function createCORSRequest(method, url) {
   				var xhr = new XMLHttpRequest();
   				if ("withCredentials" in xhr) {
@@ -91,51 +335,24 @@
 		<!-- Here are examples of how to call REST API Methods -->
 		<script type="text/javascript">
 		
-			// This calls the helloJSONList REST method from TopTrumpsRESTAPI
-			function helloJSONList() {
-			
+			function setUp() {
 				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloJSONList"); // Request type and URL
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/setUp"); // Request type and URL
 				
 				// Message is not sent yet, but we can check that the browser supports CORS
 				if (!xhr) {
   					alert("CORS not supported");
 				}
 
-				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
-				// to do when the response arrives 
+				alert("Welcome to Top Trumps. Please select the number of your opponents, using the red buttons. Then, click Update."); 
 				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					//alert(responseText); // lets produce an alert
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();		
 			}
 			
-			// This calls the helloJSONList REST method from TopTrumpsRESTAPI
-			function helloWord(word) {
-			
-				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloWord?Word="+word); // Request type and URL+parameters
-				
-				// Message is not sent yet, but we can check that the browser supports CORS
-				if (!xhr) {
-  					alert("CORS not supported");
-				}
-
-				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
-				// to do when the response arrives 
-				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					// alert(responseText); // lets produce an alert
-				};
-				
-				// We have done everything we need to prepare the CORS request, so send it
-				xhr.send();		
-			}
-			
-			
+		
 			function deckString() {
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/deckString"); // Request type and URL
 				
@@ -148,16 +365,10 @@
 				// to do when the response arrives 
 				xhr.onload = function(e) {
  					var responseText = xhr.response; // the text of the response
-					// alert(responseText); // lets produce an alert
-					
 					var parsedDeck = JSON.parse(responseText);
-					console.log(parsedDeck);
-					
-					
-					//	alert(parsedDeck.fieldNames);	
+					console.log(parsedDeck);	
 					var div = document.createElement("div");
 					div.innerHTML = "<div class='alert alert-primary' role='alert' onclick='alert('test')'> This is the deck </div>";
-				
 					document.getElementById("deckObject").appendChild(div);
 				}
 				
@@ -220,26 +431,20 @@
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
 				// to do when the response arrives 
 				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					// alert(responseText); // lets produce an alert
-					
-					var parsedCard = JSON.parse(responseText);
-					console.log(parsedCard);
-					
-				
-					// alert(parsedCard);	
-					var div = document.createElement("div");
-					div.innerHTML = "<div class='alert alert-primary' role='alert'> This is the human card </div>";
-					
-					document.getElementById("humanCard").appendChild(div);
+					var humanCard = xhr.response; // the text of the response
+ 					document.getElementById("humanCard").innerHTML = humanCard;
+ 					if(humanCard === "No cards left.") {
+ 						alert("Game Over. You lost.");
+ 					}
+					// alert(humanCard); // lets produce an alert
 				}
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();	
 			}
 			
-			function getHumanCard2() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getHumanCard"); // Request type and URL
+			function getWinnerCard() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getWinnerCard"); // Request type and URL
 				
 				// Message is not sent yet, but we can check that the browser supports CORS
 				if (!xhr) {
@@ -249,9 +454,132 @@
 				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
 				// to do when the response arrives 
 				xhr.onload = function(e) {
-					var humanCard = xhr.response; // the text of the response
- 					document.getElementById("humanCard2").innerHTML = humanCard;
-					// alert(humanCard); // lets produce an alert
+					var winnerCard = xhr.response; // the text of the response
+					alert("The winner card was: " + winnerCard);
+ 					document.getElementById("winnerCard").innerHTML = winnerCard;
+ 					
+					
+				}
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();	
+			}
+			
+			function getCategorySelected() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getCategorySelected"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+					var categoryChosen = xhr.response; // the text of the response
+					alert("The attribute chosen was: " + categoryChosen);
+ 					document.getElementById("categoryChosen").innerHTML = categoryChosen;
+ 				
+				}
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();	
+			}
+			
+			function getCardsInPlayerDeck() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getCardsInPlayerDeck"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+					var cardsInPlayerDeck = xhr.response; // the text of the response
+ 					document.getElementById("cardsInPlayerDeck").innerHTML = cardsInPlayerDeck;
+ 				
+				}
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();	
+			}
+			
+				function getCardsInAI1Deck() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getCardsInAI1Deck"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+					var cardsInPlayerDeck = xhr.response; // the text of the response
+ 					document.getElementById("cardsInAI1Deck").innerHTML = cardsInPlayerDeck;
+ 				
+				}
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();	
+			}
+			
+				function getCardsInAI2Deck() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getCardsInAI2Deck"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+					var cardsInPlayerDeck = xhr.response; // the text of the response
+ 					document.getElementById("cardsInAI2Deck").innerHTML = cardsInPlayerDeck;
+ 				
+				}
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();	
+			}
+			
+				function getCardsInAI3Deck() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getCardsInAI3Deck"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+					var cardsInPlayerDeck = xhr.response; // the text of the response
+ 					document.getElementById("cardsInAI3Deck").innerHTML = cardsInPlayerDeck;
+ 				
+				}
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();	
+			}
+			
+				function getCardsInAI4Deck() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getCardsInAI4Deck"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+					var cardsInPlayerDeck = xhr.response; // the text of the response
+ 					document.getElementById("cardsInAI4Deck").innerHTML = cardsInPlayerDeck;
+ 				
 				}
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -347,6 +675,27 @@
 				xhr.send();	
 			}
 			
+ 			
+ 			function hideAINumberButtons() {
+ 				var AI1Button = document.getElementById("AI1Button");
+ 				var AI2Button = document.getElementById("AI2Button");
+ 				var AI3Button = document.getElementById("AI3Button");
+ 				var AI4Button = document.getElementById("AI4Button");
+ 				var roundNumber = document.getElementById("roundNum");
+ 				if(roundNumber == 0) {
+ 					AI1Button.style.visibility = 'visible';
+ 					AI2Button.style.visibility = 'visible';
+ 					AI3Button.style.visibility = 'visible';
+ 					AI4Button.style.visibility = 'visible';
+ 				} else {
+ 					AI1Button.style.visibility = 'hidden';
+ 					AI2Button.style.visibility = 'hidden';
+ 					AI3Button.style.visibility = 'hidden';
+ 					AI4Button.style.visibility = 'hidden';
+ 				}
+ 			}
+ 				
+ 								
 			
 			function getActivePlayer() {
 			
@@ -360,241 +709,289 @@
 				xhr.onload = function(e) {
 					var activePlayer = xhr.response; // the text of the response
  					document.getElementById("actPlayer").innerHTML = activePlayer;
+ 					var ai1 = document.getElementById("AI1Box");
+ 					var ai2 = document.getElementById("AI2Box");
+ 					var ai3 = document.getElementById("AI3Box");
+ 					var ai4 = document.getElementById("AI4Box");
+ 					var catButton1 = document.getElementById("catButton1");
+ 					var catButton2 = document.getElementById("catButton2");
+ 					var catButton3 = document.getElementById("catButton3");
+ 					var catButton4 = document.getElementById("catButton4");
+ 					var catButton5 = document.getElementById("catButton5");
+ 					
+ 					<!-- The following code hides the AI Cards if it's the user's turn -->
+ 					if(activePlayer === "You") {
+ 						ai1.style.display = 'none';
+ 						ai2.style.display = 'none';
+ 						ai3.style.display = 'none';
+ 						ai4.style.display = 'none';
+ 						catButton1.style.visibility = 'visible';
+ 						catButton2.style.visibility = 'visible';
+ 						catButton3.style.visibility = 'visible';
+ 						catButton4.style.visibility = 'visible';
+ 						catButton5.style.visibility = 'visible';
+ 						
+ 					} else {
+ 						ai1.style.display = 'block';
+ 						ai2.style.display = 'block';
+ 						ai3.style.display = 'block';
+ 						ai4.style.display = 'block';
+ 						catButton1.style.visibility = 'hidden';
+ 						catButton2.style.visibility = 'hidden';
+ 						catButton3.style.visibility = 'hidden';
+ 						catButton4.style.visibility = 'hidden';
+ 						catButton5.style.visibility = 'hidden';
+ 					}
 					// alert(activePlayer); // lets produce an alert
+					
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();		
 			}
 			
+			
+			function getNumberPlayersStillInGame() {
+			
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getNumberPlayersStillInGame"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
 
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					var numberPlayers = xhr.response; // the text of the response
+ 					document.getElementById("numberPlayers").innerHTML = numberPlayers;
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			function humanWon() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getNumberOfPlayers"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					var numberPlayers = document.getElementById("numberPlayers");
+ 					var humanCard = document.getElementById("humanCard2");
+ 					if(numberPlayers == 1 && humanCard != "No cards left.") {
+						alert("Game Over. You WON!"); // lets produce an alert
+					}
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			
+			function userInput1() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('POST', "http://localhost:7777/toptrumps/userInput1"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			function userInput2() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('POST', "http://localhost:7777/toptrumps/userInput2"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			function userInput3() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('POST', "http://localhost:7777/toptrumps/userInput3"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			function userInput4() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('POST', "http://localhost:7777/toptrumps/userInput4"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			function userInput5() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('POST', "http://localhost:7777/toptrumps/userInput5"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			
+				function numberOfPlayers1() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('POST', "http://localhost:7777/toptrumps/numberOfPlayers1"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+				
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			function numberOfPlayers2() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('POST', "http://localhost:7777/toptrumps/numberOfPlayers2"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			
+			function numberOfPlayers3() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('POST', "http://localhost:7777/toptrumps/numberOfPlayers3"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			
+			function numberOfPlayers4() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('POST', "http://localhost:7777/toptrumps/numberOfPlayers4"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			function advanceToNextRound() {
+			// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('POST', "http://localhost:7777/toptrumps/advanceToNextRound"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					refresh();
+					
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+			
+			
+			function refresh() {
+  				getRound();
+				getHumanCard();
+				getActivePlayer();
+				getAI1Card();
+				getAI2Card();					
+				getAI3Card();
+				getAI4Card();
+				getWinner();
+				humanWon();
+				getNumberPlayersStillInGame();
+				getWinnerCard();
+				getCategorySelected();
+				getCardsInPlayerDeck();
+				getCardsInAI1Deck();
+				getCardsInAI2Deck();
+				getCardsInAI3Deck();
+				getCardsInAI4Deck();
+				hideAINumberButtons();
+			}			
+			
+		
 		</script>
-		
-		
-		<style>
-.heading {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  background-color: purple;
-  color: white;
-  text-align: center;
-}
-</style>
 
-<div class="heading">
-  <p>Top Trumps Game</p>
-</div>
-
-<style>
-.roundCaption {
-  position: fixed;
-  left: 0;
-  top: 30;
-  width: 100%;
-  background-color: DeepPink;
-  color: white;
-  text-align: center;
-}
-</style>
-
-<div class="roundCaption">
-  Round <span id="roundNum"></span>
-</div>
-
-<style>
-.playerCard {
-  position: fixed;
-  left: 0;
-  top: 50;
-  width: 100%;
-  background-color: Pink;
-  color: white;
-  text-align: center;
-}
-</style>
-
-<div class="playerCard">
-  HumanCard: <span id="humanCard2"></span>
-</div>
-
-<style>
-.AI1Card {
-  position: fixed;
-  left: 0;
-  top: 440;
-  width: 100%;
-  background-color: Pink;
-  color: white;
-  text-align: center;
-}
-</style>
-
-<div class="AI1Card">
-  AI1Card: <span id="AI1Card"></span>
-</div>
-
-<style>
-.AI2Card {
-  position: fixed;
-  left: 0;
-  top: 460;
-  width: 100%;
-  background-color: Pink;
-  color: white;
-  text-align: center;
-}
-</style>
-
-<div class="AI2Card">
-  AI2Card: <span id="AI2Card"></span>
-</div>
-
-<style>
-.AI3Card {
-  position: fixed;
-  left: 0;
-  top: 480;
-  width: 100%;
-  background-color: Pink;
-  color: white;
-  text-align: center;
-}
-</style>
-
-<div class="AI3Card">
-  AI3Card: <span id="AI3Card"></span>
-</div>
-
-<style>
-.AI4Card {
-  position: fixed;
-  left: 0;
-  top: 500;
-  width: 100%;
-  background-color: Pink;
-  color: white;
-  text-align: center;
-}
-</style>
-
-<div class="AI4Card">
-  AI4Card: <span id="AI4Card"></span>
-</div>
-
-
-<style>
-.winner {
-  position: fixed;
-  left: 0;
-  top: 70;
-  width: 100%;
-  background-color: Red;
-  color: white;
-  text-align: center;
-}
-</style>
-
-<div class="winner">
-	Winner: <span id="winner"></span>
-</div>
-
-
-
-
-
-
-<div class="card-deck" style="position: fixed; left: 50; top: 100; width:80rem;">
-  <div class="card bg-warning">
-  	 	<div class="card-header">Active Player...</div>
-  		 <div class="card-body">... is <span id="actPlayer"></span>. Category selected: 
-   		 <h5 class="card-title"></h5>
-      <p class="card-text"></p>
-    </div>
-  </div>
-  <div class="card bg-success">
-   <div class="card-header">You</div>
-  <img class="card-img-top" src="..." alt="Card image cap">
-    <div class="card-body nice">
-    <h5 class="card-title">Primary card title</h5>
-      <p class="card-text nice"></p>
-    </div>
-  </div>
-  <div class="card bg-danger">
-   <div class="card-header">AI1</div>
-  <img class="card-img-top" src="..." alt="Card image cap">
-    <div class="card-body"> ...  <span id="humanCard2></span> End.
-    <h5 class="card-title">.</h5>
-      <p class="card-text">.</p>
-    </div>
-  </div>
-  <div class="card bg-danger">
-   <div class="card-header">AI2</div>
-  <img class="card-img-top" src="..." alt="Card image cap">
-    <div class="card-body">
-    <h5 class="card-title">Primary card title</h5>
-      <p class="card-text">Some text></p>
-    </div>
-  </div>
-  <div class="card bg-danger">
-   <div class="card-header">AI3</div>
-  <img class="card-img-top" src="..." alt="Card image cap">
-    <div class="card-body">
-    <h5 class="card-title">Primary card title</h5>
-      <p class=card-text">Some text inside the fourth card</p>
-    </div>
-  </div> 
-   <div class="card bg-danger">
-   <div class="card-header">AI4</div>
-  <img class="card-img-top" src="..." alt="Card image cap">
-    <div class="card-body">
-    <h5 class="card-title">Primary card title</h5>
-      <p class="card-text">Some text inside the fourth card</p>
-    </div>
-  </div> 
-</div>
-
-
-  
- <button style="position: fixed; left: 50; top: 600; width:80rem;" onclick="refresh()">Update!</button>
-
-<script>
-function refresh() {
-  	getRound();
-	getHumanCard();
-	getActivePlayer();
-	getHumanCard2();
-	getWinner();
-	getAI1Card();
-	getAI2Card();
-	getAI3Card();
-	getAI4Card();
-}
-</script>
-
- <button style="position: fixed; left: 50; top: 630; width:80rem;" onclick="newGame()">New Game</button>
-
-<script>
-function newGame() {
-	initalize();
-}
-</script>
-
-
-
-<form>
-  <div class="form-group" style="position: fixed; left: 50; top: 525; width:80rem;">
-    <label for="ChooseCategory">Choose a Category</label>
-    <input type="integer" class="form-control" id="ChooseCategory" aria-describedby="emailHelp" placeholder="Enter category number">
-</div>
-</form>
-
-
-
-
-
-
-		
 		</body>
 </html>
