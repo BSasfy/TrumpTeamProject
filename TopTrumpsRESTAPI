@@ -39,7 +39,7 @@ public class TopTrumpsRESTAPI {
 	public String deckString = "";
 	protected int counter = 0;
 	protected int counter2 = 0;
-	public Database db;
+	public Database db=new Database();
 	Player humanPlayer = new Player();
 	Player AI1 = new Player();
 	Player AI2 = new Player();
