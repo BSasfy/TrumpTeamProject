@@ -1,20 +1,12 @@
-package online.dwResources;
+ackage online.dwResources;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import online.configuration.TopTrumpsJSONConfiguration;
@@ -42,10 +34,18 @@ import commandline.Player;
  * methods that allow a TopTrumps game to be controled from a Web page.
  */
 public class TopTrumpsRESTAPI {
-	public GamePlay gp;
-	public Database db;
-	private DeckInAndShuffle d;
+	private DeckInAndShuffle d = new DeckInAndShuffle();;
 	public boolean online = true;
+	public String deckString = "";
+	protected int counter = 0;
+	protected int counter2 = 0;
+	public Database db;
+	Player humanPlayer = new Player();
+	Player AI1 = new Player();
+	Player AI2 = new Player();
+	Player AI3 = new Player();
+	Player AI4 = new Player();
+	GamePlay gp = new GamePlay (d, humanPlayer, AI1, AI2, AI3, AI4);
 
 	/** A Jackson Object writer. It allows us to turn Java objects
 	 * into JSON strings easily. */
@@ -62,45 +62,20 @@ public class TopTrumpsRESTAPI {
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
-		d = new DeckInAndShuffle();
-		Player humanPlayer = new Player();
-		Player AI1 = new Player();
-		Player AI2 = new Player();
-		Player AI3 = new Player();
-		Player AI4 = new Player();
-		gp = new GamePlay (d, humanPlayer, AI1, AI2, AI3, AI4);
-		db = new Database();
-		
-		
 	}
 	
 	// ----------------------------------------------------
-	// Add relevant API methods here
+	// Relevant Methods
 	// ----------------------------------------------------
 	
-	
-	
+
 	
 	@GET
-	@Path("/helloJSONList")
-	/**
-	 * Here is an example of a simple REST get request that returns a String.
-	 * We also illustrate here how we can convert Java objects to JSON strings.
-	 * @return - List of words as JSON
-	 * @throws IOException
+	@Path("/setUp")
+	/**	Starts the game 
 	 */
-	public String helloJSONList() throws IOException {
+	public void setUp() throws IOException {
 		gp.playgame();
-		
-		List<String> listOfWords = new ArrayList<String>();
-		listOfWords.add("Hello");
-		listOfWords.add("World!");
-		
-		// We can turn arbatory Java objects directly into JSON strings using
-		// Jackson seralization, assuming that the Java objects are not too complex.
-		String listAsJSONString = oWriter.writeValueAsString(listOfWords);
-		
-		return listAsJSONString;
 	}
 	
 	@GET
@@ -132,6 +107,54 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
+	@Path("/getCardsInPlayerDeck")
+	public int getCardsInPlayerDeck() throws IOException {
+		int cardsInPlayerDeck = gp.getPlayerDeck().size();
+		return cardsInPlayerDeck;
+	}
+	
+	@GET
+	@Path("/getCardsInAI1Deck")
+	public int getCardsInAI1Deck() throws IOException {
+		int cardsInDeck = gp.getAIDeck1().size();
+		return cardsInDeck;
+	}
+	
+	@GET
+	@Path("/getCardsInAI2Deck")
+	public int getCardsInAI2Deck() throws IOException {
+		int cardsInDeck = gp.getAIDeck2().size();
+		return cardsInDeck;
+	}
+	
+	@GET
+	@Path("/getCardsInAI3Deck")
+	public int getCardsInAI3Deck() throws IOException {
+		int cardsInDeck = gp.getAIDeck3().size();
+		return cardsInDeck;
+	}
+	
+	@GET
+	@Path("/getCardsInAI4Deck")
+	public int getCardsInAI4Deck() throws IOException {
+		int cardsInDeck = gp.getAIDeck4().size();
+		return cardsInDeck;
+	}
+	
+	@GET
+	@Path("/getWinnerCard")
+	public String getWinnerCard() throws IOException {
+		String card = "";
+		List winnerDeck = gp.getWinnerCard();
+		if(winnerDeck == null) {
+			card = "No winner card.";
+		} else {
+			card = oWriter.writeValueAsString(winnerDeck);
+		}
+		return card;
+	}
+	
+	@GET
 	@Path("/getAI1Card")
 	public String getAI1Card() throws IOException {
 		String cardAI1 = "";
@@ -150,7 +173,7 @@ public class TopTrumpsRESTAPI {
 	@Path("/getAI2Card")
 	public String getAI2Card() throws IOException {
 		String cardAI2 = "";
-		List<List> AI2Deck = gp.getAIDeck1();
+		List<List> AI2Deck = gp.getAIDeck2();
 		if(AI2Deck.isEmpty()) {
 			cardAI2 = "No cards left.";
 		} else {
@@ -201,30 +224,34 @@ public class TopTrumpsRESTAPI {
 	@Path("/deckString")
 	public String deckString() throws IOException {
 		d.setUpDeck();
-		String deckString = oWriter.writeValueAsString(d);
+		deckString = oWriter.writeValueAsString(d);
 		return deckString;
 	}
 	
-	
 	@GET
-	@Path("/helloWord")
-	/**
-	 * Here is an example of how to read parameters provided in an HTML Get request.
-	 * @param Word - A word
-	 * @return - A String
-	 * @throws IOException
-	 */
-	public String helloWord(@QueryParam("Word") String Word) throws IOException {
-		return "Hello "+Word;
+	@Path("/getNumberPlayersStillInGame")
+	public int getNumberPlayersStillInGame() throws IOException {
+		int numberOfPlayers = gp.getNumberPlayersStillInGame();
+		return numberOfPlayers;
 	}
 	
 	@GET
-	@Path("/GetNumberOfGames")
-	public String GetNumberOfGames()throws IOException
-	{
-		db.DisplayDataBase();
-		String values=db.GetNumberOfGames();
-		return values;
+	@Path("/getCategorySelected")
+	public String getCategorySelected() throws IOException {
+		String categoryChosen = "No category selected yet.";
+		int categorySelected = gp.getChosenAttribute();
+		if(categorySelected == 1) {
+			categoryChosen = "Size";
+		} else if(categorySelected == 2) {
+			categoryChosen = "Speed";
+		} else if(categorySelected == 3) {
+			categoryChosen = "Range";
+		} else if(categorySelected == 4) {
+			categoryChosen = "Firepower";
+		} else if(categorySelected == 5) {
+			categoryChosen = "Cargo";
+		}
+		return categoryChosen;
 	}
 	
 	@GET
@@ -256,10 +283,72 @@ public class TopTrumpsRESTAPI {
 	
 	@GET
 	@Path("/GetLongestGame")
-	public String GetLongestGame()throws IOException
-	{
+	public String GetLongestGame()throws IOException {
 		db.DisplayDataBase();
 		String values=db.GetLongestGame();
 		return values;
 	}
+
+	
+	@POST
+	@Path("/userInput1")
+	public void userInput1() throws IOException {
+		humanPlayer.setChosenAttribute(1);
+	}
+	
+	@POST
+	@Path("/userInput2")
+	public void userInput2() throws IOException {
+		humanPlayer.setChosenAttribute(2);
+	}
+	
+	@POST
+	@Path("/userInput3")
+	public void userInput3() throws IOException {
+		humanPlayer.setChosenAttribute(3);
+	}
+	
+	@POST
+	@Path("/userInput4")
+	public void userInpu4t() throws IOException {
+		humanPlayer.setChosenAttribute(4);
+	}
+	
+	@POST
+	@Path("/userInput5")
+	public void userInput5() throws IOException {
+		humanPlayer.setChosenAttribute(5);
+	}
+	
+	@POST
+	@Path("/numberOfPlayers1")
+	public void numberOfPlayers1() throws IOException {
+		gp.setNumberOfPlayers(1);
+	}
+	
+	@POST
+	@Path("/numberOfPlayers2")
+	public void numberOfPlayers2() throws IOException {
+		gp.setNumberOfPlayers(2);
+	}
+	
+	@POST
+	@Path("/numberOfPlayers3")
+	public void numberOfPlayers3() throws IOException {
+		gp.setNumberOfPlayers(3);
+	}
+	
+	@POST
+	@Path("/numberOfPlayers4")
+	public void numberOfPlayers4() throws IOException {
+		gp.setNumberOfPlayers(4);
+	}
+	
+	@POST
+	@Path("/advanceToNextRound")
+	public void advanceToNextRound() throws IOException {
+		gp.setAdvanceToNextRound(1);
+	}
+	
 }
+
