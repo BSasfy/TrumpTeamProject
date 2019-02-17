@@ -12,6 +12,7 @@ public class Player {
 	boolean isStillInGame = true;
 	String name;
 	List currentCard;
+	boolean isGameOffline = false;
 	
 	void setIsStillInGame(boolean isInGame) {
 		isStillInGame = isInGame;
@@ -38,13 +39,24 @@ public class Player {
 	}
 	
 	int humanChooseAttribute() {
-		//We need to find a way for the player to make sense of the numbers. i.e. display attribute name along with the scores in GamePlay where the card gets displayed each round.
+		int count = 0;
+		chosenAttribute = 0;
+		if(isGameOffline != true) {
+			while(chosenAttribute == 0) {
+				chosenAttribute = getChosenAttribute();
+				count++;
+				if(count == 100000) { // Something needs to be printed, otherwise the while loop doesn't work
+					System.out.println(count);
+				}
+			}
+		} else {
 		Scanner s = new Scanner(System.in);
 		System.out.println("Please enter the number for your chosen category: ");
 		chosenAttribute=s.nextInt();
+		}
 		return chosenAttribute;
-		//HELP
 	}
+	
 	
 	int AIChooseAttribute() {
 		
@@ -70,6 +82,18 @@ public class Player {
 	
 	public void setCurrentCard (List currentCard) {
 		this.currentCard = currentCard;
+	}
+	
+	public void setChosenAttribute(int chosenAttribute) {
+		this.chosenAttribute = chosenAttribute;
+	}
+	
+	public int getChosenAttribute() {
+		return chosenAttribute;
+	}
+	
+	public void setIsGameOffline(boolean isOffline) {
+		this.isGameOffline = isOffline;
 	}
 	
 
