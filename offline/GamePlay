@@ -122,7 +122,7 @@ public class GamePlay {
 			// play cards
 			winner = null;
 			cardsInGame.clear();
-			numberOfPlayers = 5;
+			
 
 			if (human.isStillInGame) {
 				cardsInGame.add(playerDeck.get(0));
@@ -358,6 +358,7 @@ public class GamePlay {
 				}
 				// passing activePlayer status
 				activePlayer = winner;
+				numberOfPlayers = 5;
 
 				// find a way for this to get displayed only once? Maybe just Gold Plating.
 				if (playerDeck.isEmpty()) {
