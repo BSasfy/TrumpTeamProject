@@ -64,7 +64,6 @@ div.container{
       <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
       <a class="nav-item nav-link" href="http://localhost:7777/toptrumps/game/">Play the game</a>
       <a class="nav-item nav-link" href="http://localhost:7777/toptrumps/stats/">Statistics</a>
-      <a class="nav-item nav-link disabled" href="#">Disabled</a>
     </div>
   </div>
 </nav>
