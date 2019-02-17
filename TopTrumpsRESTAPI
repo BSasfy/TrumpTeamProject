@@ -155,6 +155,19 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	@GET
+	@Path("/getDrawPile")
+	public String getDrawPile() throws IOException {
+		String drawPileString = "";
+		List drawPile = gp.getDrawPile();
+		if(drawPile.isEmpty()) {
+			drawPileString = "No cards in pile";
+		} else {
+			drawPileString = oWriter.writeValueAsString(drawPile);
+		}
+		return drawPileString;
+	}
+	
+	@GET
 	@Path("/getAI1Card")
 	public String getAI1Card() throws IOException {
 		String cardAI1 = "";
