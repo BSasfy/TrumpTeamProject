@@ -359,7 +359,6 @@ public class GamePlay {
 				// passing activePlayer status
 				activePlayer = winner;
 				numberOfPlayers = 5;
-
 				// find a way for this to get displayed only once? Maybe just Gold Plating.
 				if (playerDeck.isEmpty()) {
 					human.setIsStillInGame(false);
