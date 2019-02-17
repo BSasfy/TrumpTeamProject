@@ -567,8 +567,12 @@ public class GamePlay {
 	}
 
 	public String getWinner() {
-		return ((Player) winner).getName();
-
+		public String getWinner() {
+		String winnerName = "No winner yet";
+		if(winner != null) {
+			winnerName = ((Player) winner).getName();
+		}
+		return winnerName;
 	}
 
 	public List<List> getPlayerDeck() {
