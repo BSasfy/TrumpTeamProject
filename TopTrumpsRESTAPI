@@ -76,6 +76,7 @@ public class TopTrumpsRESTAPI {
 	 */
 	public void setUp() throws IOException {
 		gp.playgame();
+		db.LoadDatabase();
 	}
 	
 	@GET
