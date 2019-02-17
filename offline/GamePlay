@@ -28,9 +28,9 @@ import java.util.Random;
 public class GamePlay {
 
 	boolean isGameOffline = false;
-	int numberOfPlayers = 0;
-	List<List> winnerCard = null;
-	int chosenAttribute = 0;
+	int numberOfPlayers;
+	List<List> winnerCard;
+	int chosenAttribute;
 
 	
 	List<List> shuffledDeck = new ArrayList<List>();
@@ -49,12 +49,13 @@ public class GamePlay {
 	Player AI3;
 	Player AI4;
 
-	int aicount = 0;
-	int hcount = 0;
-	int gcount = 0;
-	int dcount = 0;
-	int roundNumber = 0;
-	int advanceToNextRound = 0;
+	int aicount;
+	int hcount;
+	int gcount;
+	int dcount;
+	int roundNumber;
+	int j;
+	int advanceToNextRound;
 
 	Object activePlayer;
 	Object winner;
@@ -63,11 +64,11 @@ public class GamePlay {
 	String[] attributeNames;
 	Database db = new Database();
 
-	int numberOfHumanWins = 0;
-	int numberOfAI1Wins = 0;
-	int numberOfAI2Wins = 0;
-	int numberOfAI3Wins = 0;
-	int numberOfAI4Wins = 0;
+	int numberOfHumanWins;
+	int numberOfAI1Wins;
+	int numberOfAI2Wins;
+	int numberOfAI3Wins;
+	int numberOfAI4Wins;
 
 	DeckInAndShuffle dias = new DeckInAndShuffle();
 
@@ -93,8 +94,10 @@ public class GamePlay {
 		if (isGameOffline) {
 			System.out.println("Game is being played offline.");
 		} else {
-			System.out.println("Game is being played online."); // not accounting for if its false
+			System.out.println("Game is being played online.");
 		} // delete entire if block when done
+		
+		clearPreviousGameData();
 
 		getNumberOfPlayers();
 
@@ -106,7 +109,7 @@ public class GamePlay {
 
 		// human.setIsStillInGame(false);
 		System.out.println("Game Start");
-		int j = 0;
+		
 
 		attributeNames = cardsIn.getFieldNames();
 
@@ -444,6 +447,42 @@ public class GamePlay {
 		db.setlongestGame(j);
 
 	}
+	
+	public void clearPreviousGameData() {
+		numberOfPlayers = 0;
+		winnerCard = null;
+		chosenAttribute = 0;
+
+		shuffledDeck.clear();
+		playerDeck.clear();
+		AIDeck1.clear();
+		AIDeck2.clear();
+		AIDeck3.clear();
+		AIDeck4.clear();
+
+		drawPile.clear();
+		
+
+		aicount = 0;
+		hcount = 0;
+		gcount = 0;
+		dcount = 0;
+		roundNumber = 0;
+		advanceToNextRound = 0;
+
+		activePlayer = null;
+		winner = null;
+
+		
+		attributeNames = null;
+
+		numberOfHumanWins = 0;
+		numberOfAI1Wins = 0;
+		numberOfAI2Wins = 0;
+		numberOfAI3Wins = 0;
+		numberOfAI4Wins = 0;
+	}
+
 
 	Object getActivePlayer() {
 		Random rand = new Random();
