@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 //ATTENTION! human player is deactivated and numberOfPlayers == 2 at break. 
 
@@ -25,6 +24,7 @@ import java.util.Scanner;
 // WHAT: find a way to display it only once when a player is out of the game, not every round. 
 //NOT DONE: create more methods to structure the code better.
 
+@SuppressWarnings("rawtypes")
 public class GamePlay {
 
 	boolean isGameOffline = false;
@@ -32,6 +32,7 @@ public class GamePlay {
 	List<List> winnerCard = null;
 	int chosenAttribute = 0;
 
+	
 	List<List> shuffledDeck = new ArrayList<List>();
 	List<List> playerDeck = new ArrayList<List>();
 	List<List> AIDeck1 = new ArrayList<List>();
@@ -86,6 +87,7 @@ public class GamePlay {
 
 	}
 
+	@SuppressWarnings({ "static-access", "unchecked" })
 	public void playgame() throws IOException {
 
 		if (isGameOffline) {
@@ -591,7 +593,7 @@ public class GamePlay {
 	}
 
 	public void setAIDeck1(List<List> AIDeck1) {
-		AIDeck1 = AIDeck1;
+		this.AIDeck1 = AIDeck1;
 	}
 
 	public List<List> getAIDeck2() {
@@ -599,7 +601,7 @@ public class GamePlay {
 	}
 
 	public void setAIDeck2(List<List> AIDeck2) {
-		AIDeck2 = AIDeck2;
+		this.AIDeck2 = AIDeck2;
 	}
 
 	public List<List> getAIDeck4() {
@@ -607,7 +609,7 @@ public class GamePlay {
 	}
 
 	public void setAIDeck4(List<List> AIDeck4) {
-		AIDeck4 = AIDeck4;
+		this.AIDeck4 = AIDeck4;
 	}
 
 	public List<List> getAIDeck3() {
@@ -615,7 +617,7 @@ public class GamePlay {
 	}
 
 	public void setAIDeck3(List<List> AIDeck3) {
-		AIDeck3 = AIDeck3;
+		this.AIDeck3 = AIDeck3;
 	}
 
 	public int getNumberPlayersStillInGame() {
