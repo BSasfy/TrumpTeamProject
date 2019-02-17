@@ -30,8 +30,7 @@ public class Database {
 
 			try {
 				Class.forName("org.postgresql.Driver");
-				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/FinalProject", "postgres",
-						"root");
+				connection = DriverManager.getConnection("jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/", "m_18_2411521p","2411521p"); 
 			} catch (Exception e) {
 				System.out.println("Could not load class" + "org.postgresql.Driver");
 				e.printStackTrace();
@@ -90,8 +89,7 @@ public class Database {
 
 			try {
 				Class.forName("org.postgresql.Driver");
-				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/FinalProject", "postgres",
-						"root");
+				connection = DriverManager.getConnection("jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/", "m_18_2411521p","2411521p"); 
 				} 
 			catch (Exception e)
 			{
