@@ -228,6 +228,22 @@ body { position: absolute; }
 </div>
 
 <style>
+.drawPileBox {
+  position: fixed;
+  left: 50;
+  top: 270;
+  width: 15%;
+  background-color: MidnightBlue;
+  color: white;
+  text-align: center;
+}
+</style>
+
+<div class="drawPileBox">
+  Draw Pile: <span id="drawPile"></span>
+</div>
+
+<style>
 .description {
   position: fixed;
   left: 50;
@@ -459,6 +475,27 @@ body { position: absolute; }
  					document.getElementById("winnerCard").innerHTML = winnerCard;
  					
 					
+				}
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();	
+			}
+			
+			function getDrawPile() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getDrawPile"); // Request type and URL
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+					var drawPile = xhr.response; // the text of the response
+					alert("Cards in the draw pile: " + drawPile);
+					
+ 					document.getElementById("drawPile").innerHTML = drawPile;
 				}
 				
 				// We have done everything we need to prepare the CORS request, so send it
@@ -988,6 +1025,7 @@ body { position: absolute; }
 				getCardsInAI3Deck();
 				getCardsInAI4Deck();
 				hideAINumberButtons();
+				getDrawPile();
 			}			
 			
 		
