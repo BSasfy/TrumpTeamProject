@@ -45,6 +45,7 @@ public class TopTrumpsCLIApplication {
 				GamePlay gp = new GamePlay(d, humanPlayer, AI1, AI2, AI3, AI4);
 				// Database db = new Database(gp);
 				gp.setIsGameOffline(true);
+				humanPlayer.setIsGameOffline(true);
 
 				gp.playgame();
 				Database db=new Database();
