@@ -468,6 +468,7 @@ public class GamePlay {
 		gcount = 0;
 		dcount = 0;
 		roundNumber = 0;
+		j = 0;
 		advanceToNextRound = 0;
 
 		activePlayer = null;
