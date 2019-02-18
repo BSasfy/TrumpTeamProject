@@ -1,3 +1,6 @@
+/*This class is the main class for the command line and online mode. It takes the shuffled deck from DeckInAndShuffle class, creates up to 5 players (Player Class), 
+*After the game has been completed, the game statistics are being passed to the Database class to be updated in the database.*/
+
 package commandline;
 
 import java.io.IOException;
@@ -6,23 +9,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-//ATTENTION! human player is deactivated and numberOfPlayers == 2 at break. 
-
-//DONE now add all cards to the Player the winnerCard belongs to.
-// DONE pass active status (firstPlayer?)
-// DONE how do we know if someone is eliminated?
-// DONE program crashes if all chosenAttribute values are equal where we determine "max"
-// DONE write statistics - each game
-// DONE find a way to draw that arrow pointing to the winning category in the winner card like in the example document on moodle. 
-// DONE IMPORTANT what happens if its a draw?
-// DONE Exception Handling needed for Player Class humanChooseAttribute(), if they enter numbers other than 1 or 5, if they enter something other than an int, etc.
-/* DONE: Do you want to see past results or play a game?
-			*1: Print Game Statistics
-			*2: Play game*/
-// DONE: Implement game statistics - database 
-// DONE: double check class, method, array and attribute names based on Java Naming Convention. 
-// WHAT: find a way to display it only once when a player is out of the game, not every round. 
-//NOT DONE: create more methods to structure the code better.
 
 @SuppressWarnings("rawtypes")
 public class GamePlay {
@@ -90,11 +76,6 @@ public class GamePlay {
 	@SuppressWarnings({ "static-access", "unchecked" })
 	public void playgame() throws IOException {
 
-		if (isGameOffline) {
-			System.out.println("Game is being played offline.");
-		} else {
-			System.out.println("Game is being played online.");
-		} // delete entire if block when done
 
 		clearPreviousGameData();
 
@@ -106,7 +87,6 @@ public class GamePlay {
 		activePlayer = getActivePlayer();
 		List<List> cardsInGame = new ArrayList<List>();
 
-		// human.setIsStillInGame(false);
 		System.out.println("Game Start");
 
 		attributeNames = cardsIn.getFieldNames();
@@ -388,8 +368,7 @@ public class GamePlay {
 					break;
 				}
 
-				// sleep is optional to slow down the game and make it more followable.
-				// Thread.sleep(2000);
+				
 
 			} catch (Exception e) {
 
