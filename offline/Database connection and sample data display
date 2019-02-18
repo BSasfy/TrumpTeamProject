@@ -1,5 +1,13 @@
+/* This class takes two inputs, existing game records (0 if none) from the database (already created) 
+*and the statistics from the game being played. The class then combines the two records and updates the following attributes in 
+*the database: 
+	*Number of Games (gameRecord)
+	*Number of times the user won (humanWinRecord)
+	*Number of times the AI won (aiWinRecord)
+	*Average number of draws (averageDraws)
+	*Longest game overall (longestGame)*/
+
 package commandline;
-//package commandline;
 
 import java.sql.*;
 
