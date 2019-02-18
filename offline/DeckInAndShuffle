@@ -1,3 +1,7 @@
+/*This class takes a .txt file (located in the same directory as the project), extracts the values contained in the file, 
+*via buffered reader, and creates an array that will be used as the card deck for the game.*/ 
+
+
 package commandline;
 
 import java.io.BufferedReader;
