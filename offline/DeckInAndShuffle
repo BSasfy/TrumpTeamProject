@@ -35,7 +35,18 @@ public class DeckInAndShuffle {
 		}
 
 		br.close();
+		setLog("Starting deck is: ");
+		addEmptyLine();
+		for (int i = 0; i < startDeck.size(); i++) {
+			setLog(startDeck.get(i).toString());
+		}
+		addLineLog();
 		shuffleDeck();
+		setLog("Shuffled deck is: ");
+		addEmptyLine();
+		for (int i = 0; i < startDeck.size(); i++) {
+			setLog(startDeck.get(i).toString());
+		}
 	}
 
 	public List<IndividualCards> separateDeck(String line) {
@@ -95,8 +106,24 @@ public class DeckInAndShuffle {
 		try {
 			fw = new FileWriter("Log.txt", true);
 			bf = new BufferedWriter(fw);
+			bf.write("---------------------------------------------------------------");
+			bf.newLine();
+			bf.flush();
+			bf.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void addEmptyLine() {
+		try {
+			fw = new FileWriter("Log.txt", true);
+			bf = new BufferedWriter(fw);
 			bf.newLine();
 			bf.newLine();
+			bf.flush();
+			bf.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
