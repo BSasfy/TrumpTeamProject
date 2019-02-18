@@ -1,3 +1,7 @@
+//This class declares attributes associated with players. 
+//The attributes are equipped with getters and setters. 
+//The class also contains a method for the users to choose their preferred attribute that will be used to compare player cards. 
+
 package commandline;
 
 import java.util.List;
